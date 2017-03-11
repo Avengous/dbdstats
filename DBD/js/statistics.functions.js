@@ -27,12 +27,13 @@ function getSummaryData(firstdate, seconddate) {
     $.ajax({
         type: "POST",
         data: {
-            //"summonerId": summonerId,
+            "summoner": summoner,
             "firstdate" : firstdate,
             "seconddate" : seconddate
         },
-        url: "../php/get-match-stats.php",
+        url: "/DBD/php/get-match-stats.php",
         success: function(response) {
+          console.log(response);
             var data = $.parseJSON(response);
             
             $("#summary_kills").html(data["avg_kills"] + " Kills");

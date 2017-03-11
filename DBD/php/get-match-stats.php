@@ -6,8 +6,13 @@ if (isset($_POST)) {
         die();
     }
     else {
+        $summoner = $_POST["summoner"];
         $dateFrom = $_POST["firstdate"];
         $dateTo = $_POST["seconddate"];
+        
+        $st = $db->prepare("SELECT champ_id FROM summoners WHERE summoner_name = '$summoner';");
+        $st->execute();
+        $summoner_id = $st->fetch()["champ_id"];
         
         $dateFrom = strtotime($dateFrom) * 1000;
         $dateTo = strtotime($dateTo) * 1000;
@@ -19,25 +24,19 @@ if (isset($_POST)) {
         $avg_kills = 0;
         $avg_deaths = 0;
         $avg_assists = 0;
-
         $match = 0;
 
-        $person = "oliver"; //this will be a POST when I get the code to specify which table we are accessing
-
         //Query current list to match against API call
-        $st = $db->prepare("SELECT * FROM match_details_" . $person . " WHERE timestamp >= " . $dateFrom . " AND timestamp <= " . $dateTo . ";");
+        $st = $db->prepare("SELECT * FROM match_details_new WHERE champ_id = $summoner_id AND timestamp >= $dateFrom AND timestamp <= $dateTo;");
         $st->execute();
         $dbmatchlist = $st->fetchAll();
-
-        //Temporary until I allow a button to send summoner values
-        $summoner_id = 22638520; //id for Oliver Phillips
 
         foreach($dbmatchlist as $i => $row) {
             $stats = unserialize($row["json"]);
 
-            for ($x = 0; $x <= 10; $x++) {
-                if ($summoner_id == $stats["participantIdentities"][$x]["player"]["summonerId"]) {
-                    $participant_id = $stats["participantIdentities"][$x]["participantId"] - 1;
+            foreach ($stats["participantIdentities"] as $i => $stat) {
+                if ($summoner_id == $stat["player"]["summonerId"]) {
+                    $participant_id = $stat["participantId"] - 1;
                 }
             }
 
@@ -46,13 +45,9 @@ if (isset($_POST)) {
             $assists[] = $stats["participants"][$participant_id]["stats"]["assists"];
         }
 
-        $avg_kills = array_sum($kills) / count($kills);
-        $avg_deaths = array_sum($deaths) / count($deaths);
-        $avg_assists = array_sum($assists) / count($assists);
-        
-        $avg_kills = round($avg_kills, 1);
-        $avg_deaths = round($avg_deaths, 1);
-        $avg_assists = round($avg_assists, 1);
+        $avg_kills = (count($kills) > 0 ? round(array_sum($kills) / count($kills), 1) : "N/A");
+        $avg_deaths = (count($deaths) > 0 ? round(array_sum($deaths) / count($deaths), 1) : "N/A");
+        $avg_assists = (count($assists) > 0 ? round(array_sum($assists) / count($assists), 1) : "N/A");
         
         echo json_encode(
             array(

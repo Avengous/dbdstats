@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^reports/([\w.-]+)(/.*)$ reports/index.php?summoner=$1 [QSA]
