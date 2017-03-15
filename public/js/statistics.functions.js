@@ -23,6 +23,20 @@ $(function() {
     $("#datepicker2").datepicker('setDate', today);
 });
 
+$(function() {
+  $(".datepicker").click(function() {
+    $(this).datepicker();
+    $(this).datepicker("show");
+  });
+});
+
+$(function() {
+  $(".datepicker2").click(function() {
+    $(this).datepicker();
+    $(this).datepicker("show");
+  });
+});
+
 function getSummaryData(firstdate, seconddate) {
     $.ajax({
         type: "POST",
