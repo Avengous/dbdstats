@@ -87,7 +87,7 @@
         </div>
 
         <!-- Scripts -->
-        <link href="{{ asset('css/jquery-ui.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"/>
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery.ui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/skel.min.js') }}"></script>
