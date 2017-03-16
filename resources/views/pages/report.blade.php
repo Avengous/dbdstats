@@ -22,6 +22,19 @@
 			<div class="circle" id="summary_deaths"></div>
 			<div class="circle" id="summary_assists"></div>
 		</div>
-	</section>                   
+		
+	</section>       	
 </div>
+
+<!-- Scripts -->
+<link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"/>
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/skel.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/util.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main-site.js') }}"></script>
+<script type="text/javascript">
+  var summoner = "{{$summonerName}}";
+</script>
+<script type="text/javascript" src="{{ asset('js/statistics.functions.js') }}"></script>
 @endsection

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <head>
 	<title>DBD| {{$summonerName}}</title>
 	<meta charset="utf-8" />

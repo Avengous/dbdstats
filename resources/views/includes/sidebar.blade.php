@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!-- Sidebar -->
 <div id="sidebar">
 	<div class="inner">
