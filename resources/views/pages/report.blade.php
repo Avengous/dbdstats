@@ -23,6 +23,8 @@
 			<div class="circle" id="summary_assists"></div>
 		</div>
 		
+		@include('includes.report_summary')
+		
 	</section>       	
 </div>
 
