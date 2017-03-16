@@ -22,5 +22,5 @@ Route::get('/', function () {
 
 Route::get('/summoner/{summonerName}', function($summonerName = 'Whambulance')
 {
-	return view('pages.index', ['summonerName' => $summonerName]);
+	return view('pages.report', ['summonerName' => $summonerName]);
 });

@@ -35,28 +35,7 @@
                             <div class="circle" id="summary_deaths"></div>
                             <div class="circle" id="summary_assists"></div>
                         </div>
-                    </section>
-
-                    <!-- Section -->
-                    <section>
-                        <header class="major">
-                        </header>
-                        <div class="posts">
-                            <article>
-                            </article>
-                            <article>
-                            </article>
-                            <article>
-                            </article>
-                            <article>
-                            </article>
-                            <article>
-                            </article>
-                            <article>
-                            </article>
-                        </div>
-                    </section>
-                      
+                    </section>                   
                 </div>
             </div>
 
