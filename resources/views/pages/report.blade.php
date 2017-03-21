@@ -9,9 +9,11 @@
 	
 	<!-- Section -->
 	<section>
+		@include('includes.report_recent_match')
 		<header class="major">
 			<h2>Summary</h2>
 		</header>
+		
 		<div id="date-info">
 			<p>Date from: <input type="text" id="datepicker" value="Click To Choose Date" size="22"></p>
 			<p>Date to: <input type="text" id="datepicker2" value="Click To Choose Date" size="22"></p>
