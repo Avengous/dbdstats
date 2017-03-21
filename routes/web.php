@@ -41,3 +41,10 @@ Route::get('summoner/{summonerId}/match/recent', function ($summonerId) {
 Route::get('summoner/{summonerId}/match/{matchId}', function ($summonerId, $matchId) {
 	return App\Report::findmatch($summonerId, $matchId)->get()->toArray()[0];
 });
+
+Route::get('summoner/{summonerId}/match/{matchId}/json', function ($summonerId, $matchId) {
+	$data = App\Report::findmatch($summonerId, $matchId)->get()->toArray()[0]['json'];
+	return unserialize($data);
+});
+
+Route::get('summoner/{summonerId}/match/{matchId}/stats', 'V1\ReportController@stats');
