@@ -50,6 +50,8 @@ Route::get('summoner/{summonerId}/match/{matchId}/json', function ($summonerId, 
 //summoner/23486636/match/2447063750/stats
 Route::get('summoner/{summonerId}/match/{matchId}/stats', 'V1\ReportController@stats');
 
+Route::get('summoner/{summonerId}/matchlist', 'V1\ReportController@getMatchList');
+
 Route::get('test/{summonerName}', function ($summonerName) {
 	return App\Summoner::summonerIdByName($summonerName)->get();
 });

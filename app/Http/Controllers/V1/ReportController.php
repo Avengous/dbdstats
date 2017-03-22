@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
-{
+{	
     public function stats($summonerId, $matchId) {
         $query = DB::table('match_details_new')->select('*')->where([['champ_id', '=', $summonerId], ['match_id', '=', $matchId]])->get();
         $data = unserialize(collect($query->toArray()[0])['json']);
@@ -15,10 +15,12 @@ class ReportController extends Controller
         foreach ($data['participantIdentities'] as $i => $id) {
             if ($id['player']['summonerId'] == $summonerId) {
                 $stats = $data['participants'][$id['participantId']]['stats'];
-				$stats['championId'] = $data['participants'][$id['participantId']]['championId'];
+				$stats['championId'] = $data['participants'][$i]['championId'];
             }
         }
-        $stats['matchId'] = $data['matchId'];
+		$stats['championName'] = $this->riot->champion()->championById($stats['championId'])->championStaticData->name;
+        //$stats['lane'] = ?
+		$stats['matchId'] = $data['matchId'];
         $stats['region'] = $data['region'];
         $stats['queueType'] = $data['queueType'];
         $stats['season'] = $data['season'];
@@ -46,5 +48,15 @@ class ReportController extends Controller
 	public function getSummonerStatsFromMatch($summonerName, $matchId) {
 		$summonerId = $this->summonerIdByName($summonerName);
 		return $this->stats($summonerId, $matchId);
+	}
+	
+	public function getMatchList($summonerName){
+		$summonerId = $this->summonerIdByName($summonerName);
+		$matchlist = $this->riot->matchlist()->matchlist($summonerId)->matches;
+		return $matchlist;
+	}
+	
+	public function getMatch($matchId) {
+		return $this->riot->match()->match($matchId);
 	}
 }

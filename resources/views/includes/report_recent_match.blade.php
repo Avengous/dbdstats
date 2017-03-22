@@ -20,7 +20,7 @@
 					@else Leave/Remake
 					@endif
 				</td>
-				<td>{{ $stats->championId }}</td>
+				<td>{{ $stats->championName }}</td>
 				<td>{{ $stats->kills }}</td>
 				<td>{{ $stats->deaths }}</td>
 				<td>{{ $stats->assists }}</td>
