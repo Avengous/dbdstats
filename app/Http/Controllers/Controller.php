@@ -17,6 +17,8 @@ class Controller extends BaseController
 	public function __construct() {
 		$this->riot = new Api('18d9e8e5-31d5-4ce6-a48c-9eb21e27117a');
 		$this->riot->attachStaticData();
+		
+		// Uncomment in non-windows environments
 		//$this->riot->remember(3600);
 		//$this->riot->limit(10, 10);
 		//$this->riot->limit(500, 600);

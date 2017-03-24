@@ -15,11 +15,11 @@ class ReportController extends Controller
         foreach ($data['participantIdentities'] as $i => $id) {
             if ($id['player']['summonerId'] == $summonerId) {
                 $stats = $data['participants'][$id['participantId']]['stats'];
+				$stats['lane'] = $data['participants'][$id['participantId']]['timeline']['lane'];
 				$stats['championId'] = $data['participants'][$i]['championId'];
             }
         }
 		$stats['championName'] = $this->riot->champion()->championById($stats['championId'])->championStaticData->name;
-        //$stats['lane'] = ?
 		$stats['matchId'] = $data['matchId'];
         $stats['region'] = $data['region'];
         $stats['queueType'] = $data['queueType'];
