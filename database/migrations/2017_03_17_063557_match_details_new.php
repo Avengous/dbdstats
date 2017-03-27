@@ -13,12 +13,7 @@ class MatchDetailsNew extends Migration
      */
     public function up()
     {
-        Schema::create('match_details_new', function (Blueprint $table) {
-            $table->integer('champ_id');
-            $table->integer('match_id');
-            $table->text('json');
-            $table->date('timestamp');
-        });
+
     }
 
     /**
@@ -28,6 +23,6 @@ class MatchDetailsNew extends Migration
      */
     public function down()
     {
-        Schema::drop('match_details_new');
+
     }
 }

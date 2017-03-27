@@ -77,7 +77,6 @@ class ReportController extends Controller
             $table->integer('match_id'); x 
             $table->text('json');
             $table->date('timestamp');
-		
 		*/
 		$summonerId = $this->summonerIdByName($summonerName);
 		$matchlist = $this->getMatchList($summonerName);

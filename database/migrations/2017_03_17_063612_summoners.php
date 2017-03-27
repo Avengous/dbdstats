@@ -13,10 +13,7 @@ class Summoners extends Migration
      */
     public function up()
     {
-        Schema::create('summoners', function (Blueprint $table) {
-            $table->integer('champ_id');
-            $table->text('summoner_name');
-        });
+		
     }
 
     /**
@@ -26,6 +23,6 @@ class Summoners extends Migration
      */
     public function down()
     {
-        Schema::drop('summoners');
+
     }
 }
