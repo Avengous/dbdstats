@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use LeagueWrap\Api;
 
 class Controller extends BaseController
@@ -22,5 +23,11 @@ class Controller extends BaseController
 		//$this->riot->remember(3600);
 		//$this->riot->limit(10, 10);
 		//$this->riot->limit(500, 600);
+	}
+	
+	public function summonerIdByName($summonerName) {
+		$query = DB::table('summoners')->select('champ_id')->where([['summoner_name', '=', $summonerName]]);
+		$summonerId = $query->pluck('champ_id')[0];
+		return $summonerId;
 	}
 }

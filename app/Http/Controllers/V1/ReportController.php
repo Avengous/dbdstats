@@ -32,12 +32,14 @@ class ReportController extends Controller
         $stats['matchVersion'] = $data['matchVersion'];
         return Response($stats);
     }
-	
+	/* * * * *
+	 * Moved to main controller
 	public function summonerIdByName($summonerName) {
 		$query = DB::table('summoners')->select('champ_id')->where([['summoner_name', '=', $summonerName]]);
 		$summonerId = $query->pluck('champ_id')[0];
 		return $summonerId;
 	}
+	*/
 	
 	public function recentMatch($summonerId) {
         $query = DB::table('match_details_new')->select('*')->where([['champ_id', '=', $summonerId]])->latest()->pluck('match_id')[0];
