@@ -52,6 +52,4 @@ Route::get('summoner/{summonerId}/match/{matchId}/stats', 'V1\ReportController@s
 
 Route::get('summoner/{summonerId}/matchlist', 'V1\ReportController@postSummonerMatches');
 
-Route::get('test/{summonerName}', function ($summonerName) {
-	return App\Summoner::summonerIdByName($summonerName)->get();
-});
+Route::get('test/{summonerName}', 'V1\SummonerController@postSummoner');
