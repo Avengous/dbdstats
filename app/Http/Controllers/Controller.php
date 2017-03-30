@@ -24,11 +24,4 @@ class Controller extends BaseController
 		//$this->riot->limit(10, 10);
 		//$this->riot->limit(500, 600);
 	}
-	
-	// Move to summoner controller
-	public function summonerIdByName($summonerName) {
-		$query = DB::table('summoners')->select('champ_id')->where([['summoner_name', '=', $summonerName]]);
-		$summonerId = $query->pluck('champ_id')[0];
-		return $summonerId;
-	}
 }

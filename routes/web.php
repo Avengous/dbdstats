@@ -50,6 +50,8 @@ Route::get('summoner/{summonerId}/match/{matchId}/json', function ($summonerId, 
 //summoner/23486636/match/2447063750/stats
 Route::get('summoner/{summonerId}/match/{matchId}/stats', 'V1\ReportController@stats');
 
-Route::get('summoner/{summonerId}/matchlist', 'V1\ReportController@postSummonerMatches');
+//Add summoner matches to DB
+Route::get('summoner/{summonerName}/matchlist', 'V1\MatchController@verifySummonerMatchList');
 
-Route::get('test/{summonerName}', 'V1\SummonerController@postSummoner');
+//Add summoner to DB
+Route::get('summoner/{summonerId}/update', 'V1\SummonerController@postSummoner');

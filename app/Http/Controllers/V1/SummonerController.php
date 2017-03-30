@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-
 class SummonerController extends Controller
 {
     public function postSummoner($id) {
+		// Bug: If $summoner isn't ranked they cannot be added.
 		$summoner 		= $this->riot->summoner()->info($id);
 		$summonerId 	= $summoner->id;
 		$name			= $summoner->name;
@@ -45,7 +45,8 @@ class SummonerController extends Controller
 				'flexLosses'	=> $flexLosses,
 				'flexLeaguePoints' => $flexLP,
 				'revisionDate'	=> $revisionDate];
-		
+				
+		//BUG Overwrites every entry in database. GEE GEE
 		if($this->summonerExist($summonerId)) {
 			DB::table('summoners')->update($data);
 		}

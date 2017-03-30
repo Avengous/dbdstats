@@ -17,7 +17,7 @@
 				<td>
 					@if ($stats->winner == 1) Victory
 					@elseif ($stats->winner == 0) Defeat
-					@else Leave/Remake
+					@else Remake
 					@endif
 				</td>
 				<td>{{ $stats->championName }}</td>
