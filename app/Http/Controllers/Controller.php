@@ -16,6 +16,10 @@ class Controller extends BaseController
 	public $riot;
 
 	public function __construct() {
+		// Disable query log as large queries utilize too much memory.
+		DB::disableQueryLog();
+		
+		// LeagueWrap API Object
 		$this->riot = new Api('18d9e8e5-31d5-4ce6-a48c-9eb21e27117a');
 		//$this->riot->setTimeout(60);
 		$this->riot->attachStaticData();

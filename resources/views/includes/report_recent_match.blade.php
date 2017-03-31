@@ -1,31 +1,53 @@
 
 	<div>
-		@php ($stats = json_decode(App::make("App\Http\Controllers\V1\ReportController")->getRecentMatchStats($summonerName)->content()))
+		@php ($matches = App::make("App\Http\Controllers\V1\ReportController")->recentMatchDetails($summonerName))
 		<table>
-		<h4>Recent Match</h4>
-		{{-- json_encode($stats) --}}
+		<h4>Recent Matches</h4>
+		
 			<tr>
-				<td>Winner</td>
-				<td>Champion</td>
-				<td>Kills</td>
-				<td>Deaths</td>
-				<td>Assist</td>
-				<td>KDA</td>
-				<td>Champion Dmg</td>
+				<th>Winner</th>
+				<th>Queue</th>
+				<th>Lane</th>
+				<th>Level</th>
+				<th>Champion</th>
+				<th>K|D|A</th>
+				<th>KDA</th>
+				<th>KP</th>
+				<th>CS</th>
+				<th>CS Diff@10</th>
+				<th>CS Diff@20</th>
+				<th>Gold/Share</th>
+				<th>Dmg/Share</th>
+				<th>Link</th>
 			</tr>
+			@foreach ($matches as $match)
+			@php ($csDiffPerMinDeltas = unserialize($match->csDiffPerMinDeltas))
 			<tr>
 				<td>
-					@if ($stats->winner == 1) Victory
-					@elseif ($stats->winner == 0) Defeat
-					@else Remake
-					@endif
+				@if ($match->winner == 0) Defeat
+				@elseif ($match->winner == 1) Victory
+				@else Remake
+				@endif
 				</td>
-				<td>{{ $stats->championName }}</td>
-				<td>{{ $stats->kills }}</td>
-				<td>{{ $stats->deaths }}</td>
-				<td>{{ $stats->assists }}</td>
-				<td>{{ round(($stats->kills + $stats->assists)/$stats->deaths, 2) }}</td>
-				<td>{{ $stats->totalDamageDealtToChampions }}</td>
+				<td>
+				@if ($match->queueType == 'TEAM_BUILDER_RANKED_SOLO') Solo
+				@else $match->queueType
+				@endif
+				</td>
+				<td></td>
+				<td>{{ $match->champLevel }}</td>
+				<td>{{ $match->championId }}</td>
+				<td>
+				{{ $match->kills }}/{{ $match->deaths }}/{{ $match->assists }}</td>
+				<td>{{ round(($match->kills+$match->assists)/$match->deaths, 2)}}</td>
+				<td>{{ $match->pctKillParticipation *100}}%</td>
+				<td>{{ $match->minionsKilled + $match->neutralMinionsKilled }}</td>
+				<td>{{ $csDiffPerMinDeltas['zeroToTen'] }}</td>
+				<td>{{ $csDiffPerMinDeltas['tenToTwenty'] }}</td>
+				<td>{{ $match->goldEarned }} {{ $match->pctTeamGoldShare * 100}}%</td>
+				<td>{{ $match->totalDamageDealtToChampions }} {{ $match->pctTeamDamageDealtToChampions * 100 }}%</td>
+				<td><a href='https://'>Click</a></td>
 			</tr>
+			@endforeach
 		</table>
 	</div>
