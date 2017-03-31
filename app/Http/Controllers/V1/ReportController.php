@@ -12,14 +12,12 @@ class ReportController extends Controller
 	use Queries;
 	
     public function matchDetails($summonerId, $matchId) {
-		$record = $this->findUniqueMatchByIds($summonerId, $matchId);
-        return Response($record);
+        return $this->findUniqueMatchByIds($summonerId, $matchId);
     }
 	
-	public function getRecentMatchStats($summonerName){
+	public function recentMatchDetails($summonerName, $matchCount=5){
 		$summonerId = $this->summonerIdByName($summonerName);
-		$matchId = $this->recentMatch($summonerId);
-		return $this->matchDetails($summonerId, $matchId);
+		return $this->recentMatches($summonerId, $matchCount)->get();
 	}
 	
 	public function getSummonerStatsFromMatch($summonerName, $matchId) {

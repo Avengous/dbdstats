@@ -16,8 +16,13 @@ trait Queries {
 		return $name;
     }
 	
-	protected function recentMatch($summonerId) {
-        $query = DB::table('match_details')->select('*')->where([['summonerId', '=', $summonerId]])->latest()->pluck('matchId')[0];
+	protected function summonerByName($summonerName) {
+		$query = DB::table('summoners')->select('*')->where([['name', '=', $summonerName]]);
+		return $query;
+	}
+	
+	protected function recentMatches($summonerId, $matchCount=1) {
+		$query = DB::table('match_details')->select('*')->where([['summonerId', '=', $summonerId]])->orderBy('matchCreation', 'desc')->take($matchCount);
 		return $query;
 	}
 	

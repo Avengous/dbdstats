@@ -5,9 +5,12 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Queries;
 
 class SummonerController extends Controller
 {
+	use Queries;
+	
     public function postSummoner($id) {
 		// Bug: If $summoner isn't ranked they cannot be added.
 		$summoner 		= $this->riot->summoner()->info($id);
@@ -62,5 +65,12 @@ class SummonerController extends Controller
 		} else {
 			return True;
 		}
+	}
+	
+	public function soloQueueRank($summonerName) {
+		$record = $this->summonerByName($summonerName);
+		$tier = $record->pluck('soloTier')[0];
+		$division = $record->pluck('soloDivision')[0];
+		return sprintf("%s %s", $tier, $division);
 	}
 }

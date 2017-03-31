@@ -4,12 +4,14 @@
 <div class="inner">
 	<!-- Header -->
 	<header id="header">
-		<a class="logo"><strong><font size="+2">{{$summonerName}}</font></strong> <div id="rank">Rank Here</div></a>
+		@php ($summonerRank = App::make("App\Http\Controllers\V1\SummonerController")->soloQueueRank($summonerName))
+		<a class="logo"><strong><font size="+2">{{$summonerName}}</font></strong> <div id="rank">{{ $summonerRank }}</div></a>
 	</header>
 	
 	<!-- Section -->
 	<section>
 		@include('includes.report_recent_match')
+		<!--
 		<header class="major">
 			<h2>Summary</h2>
 		</header>
@@ -24,7 +26,7 @@
 			<div class="circle" id="summary_deaths"></div>
 			<div class="circle" id="summary_assists"></div>
 		</div>
-		
+		-->
 		@include('includes.report_summary')
 		
 	</section>       	
@@ -40,5 +42,5 @@
 <script type="text/javascript">
   var summoner = "{{$summonerName}}";
 </script>
-<script type="text/javascript" src="{{ asset('js/statistics.functions.js') }}"></script>
+<!--<script type="text/javascript" src="{{ asset('js/statistics.functions.js') }}"></script>-->
 @endsection
