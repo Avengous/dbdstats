@@ -25,4 +25,8 @@ trait Queries {
 		$query = DB::table('match_details')->select('*')->where([['summonerId', '=', $summonerId], ['matchId', '=', $matchId]]);
 		return $query;
 	}
+	
+	protected function findRecordCount($table, $query) {
+		$query = DB::table($table)->select('*')->where($query)->count();
+	}
 }

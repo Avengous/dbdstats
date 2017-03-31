@@ -121,7 +121,7 @@ class MatchController extends Controller
 
 				DB::table('match_details')->insert($data);
 				$totalAdded++;
-				sleep(3);
+				sleep(4);
 			} else {
 				$totalSkipped++;
 			}

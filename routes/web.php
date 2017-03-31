@@ -55,3 +55,6 @@ Route::get('summoner/{summonerName}/matchlist', 'V1\MatchController@verifySummon
 
 //Add summoner to DB
 Route::get('summoner/{summonerId}/update', 'V1\SummonerController@postSummoner');
+
+//Update champion list 
+Route::get('staticdata/champions/update', 'V1\StaticDataController@updateChampionList');
