@@ -51,7 +51,7 @@ class MatchController extends Controller
 				$data['season'] = $matchDetails->season;
 				$data['queueType'] = $matchDetails->queueType;
 				$data['matchType'] = $matchDetails->matchType;
-				
+
 				// Finds participantId for $summonerId
 				foreach($matchDetails->participantIdentities as $identity) {
 					if ($identity->player['summonerId'] == $data['summonerId']) {
@@ -92,6 +92,8 @@ class MatchController extends Controller
 				$data['totalDamageDealtToChampions'] = $matchDetails->participant($participantId)->stats->totalDamageDealtToChampions;
 				$data['totalDamageTaken'] = $matchDetails->participant($participantId)->stats->totalDamageTaken;
 				$data['csDiffPerMinDeltas'] = serialize($matchDetails->participant($participantId)->timeline->csDiffPerMinDeltas);
+				$data['role'] = $matchDetails->participant($participantId)->timeline->role;
+				$data['lane'] = $matchDetails->participant($participantId)->timeline->lane;
 				
 				if ($teamDmgToChamps == 0) {
 					$data['pctTeamDamageDealtToChampions'] = 0;
@@ -121,7 +123,7 @@ class MatchController extends Controller
 
 				DB::table('match_details')->insert($data);
 				$totalAdded++;
-				sleep(4);
+				sleep(2.25);
 			} else {
 				$totalSkipped++;
 			}

@@ -22,6 +22,8 @@
 			</tr>
 			@foreach ($matches as $match)
 			@php ($csDiffPerMinDeltas = unserialize($match->csDiffPerMinDeltas))
+			@php ($role = App::make("App\Http\Controllers\V1\ReportController")->defineMatchRole($match->role, $match->lane))
+			@php ($championName = App::make("App\Http\Controllers\V1\ReportController")->championName($match->championId))
 			<tr>
 				<td>
 				@if ($match->winner == 0) Defeat
@@ -34,9 +36,9 @@
 				@else $match->queueType
 				@endif
 				</td>
-				<td></td>
+				<td>{{ $role }}</td>
 				<td>{{ $match->champLevel }}</td>
-				<td>{{ $match->championId }}</td>
+				<td>{{ $championName }}</td>
 				<td>
 				{{ $match->kills }}/{{ $match->deaths }}/{{ $match->assists }}</td>
 				<td>{{ round(($match->kills+$match->assists)/$match->deaths, 2)}}</td>

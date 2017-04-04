@@ -24,4 +24,26 @@ class ReportController extends Controller
 		$summonerId = $this->summonerIdByName($summonerName);
 		return $this->matchDetails($summonerId, $matchId);
 	}
+	
+	public function defineMatchRole($role, $lane) {
+		if ($lane == 'BOTTOM') {
+			if ($role == 'DUO_SUPPORT') {
+				return 'Support';
+			} elseif ($role == 'DUO_CARRY') {
+				return 'ADC';
+			}
+		} elseif ($lane == 'JUNGLE') {
+			return 'Jungle';
+		} elseif ($lane == 'MIDDLE') {
+			return 'Mid';
+		} elseif ($lane == 'TOP') {
+			return 'Top';
+		} else {
+			return 'Unknown';
+		}
+	}
+	
+	public function championName($championId) {
+		return $this->championNameById($championId);
+	}
 }

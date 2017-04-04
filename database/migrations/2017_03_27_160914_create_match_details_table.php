@@ -28,6 +28,8 @@ class CreateMatchDetailsTable extends Migration
 			$table->string('matchType');
 			$table->string('matchHistoryUri');
 			$table->integer('teamId');
+			$table->string('role');
+			$table->string('lane');
 			$table->integer('championId');
 			$table->integer('wardsKilled');
 			$table->integer('wardsPlaced');

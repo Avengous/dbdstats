@@ -34,4 +34,9 @@ trait Queries {
 	protected function findRecordCount($table, $query) {
 		$query = DB::table($table)->select('*')->where($query)->count();
 	}
+	
+	protected function championNameById($championId) {
+		$query = DB::Table('champions')->select('championName')->where([['championId', '=', $championId]])->pluck('championName')[0];
+		return $query;
+	}
 }
