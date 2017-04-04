@@ -46,4 +46,24 @@ class ReportController extends Controller
 	public function championName($championId) {
 		return $this->championNameById($championId);
 	}
+	
+	public function formatSeconds($duration) {
+		$result = '';
+		$seconds = intval($duration) % 60;
+		$minutes = (intval($duration) / 60) % 60;
+		$hours = (intval($duration) / 3600) % 24;
+
+		if(($hours > 0) || ($result!="")) {
+			$result .= str_pad($hours, 2, '0', STR_PAD_LEFT) . ':';
+		} 
+
+		if (($minutes > 0) || ($result!="")) {
+			$result .= str_pad($minutes, 2, '0', STR_PAD_LEFT) . ':';
+		} 
+
+		$result .= str_pad($seconds, 2, '0', STR_PAD_LEFT); 
+
+		return $result;
+	}
+
 }

@@ -39,4 +39,8 @@ trait Queries {
 		$query = DB::Table('champions')->select('championName')->where([['championId', '=', $championId]])->pluck('championName')[0];
 		return $query;
 	}
+	
+	protected function totalDeathCount($summonerId) {
+		return DB::Table('match_details')->select('deaths')->where([['summonerId', $summonerId]])->sum('deaths');
+	}
 }

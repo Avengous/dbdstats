@@ -5,7 +5,25 @@
 	<!-- Header -->
 	<header id="header">
 		@php ($summonerRank = App::make("App\Http\Controllers\V1\SummonerController")->soloQueueRank($summonerName))
-		<a class="logo"><strong><font size="+2">{{$summonerName}}</font></strong> <div id="rank">{{ $summonerRank }}</div></a>
+		@php (App::make("App\Http\Controllers\V1\SummonerController")->postSummoner($summonerName))
+		<a class="logo">
+			<strong><font size="+2">{{$summonerName}}</font></strong> 
+			<div id="rank">
+				{{ $summonerRank['solo'] }}
+				@if ($summonerName == 'Whambulance')
+					@php ($decimatedCount = App::make("App\Http\Controllers\V1\SummonerController")->decimationCount($summonerName))
+					| DECIMATED: {{ $decimatedCount }} 
+				@endif
+			</div>
+			<!-- <div id="rank">FLEX: {{ $summonerRank['flex'] }}</div> -->
+		</a>
+
+		<div style="float: right; width: 50px;">
+			<a href="{{action('V1\MatchController@verifySummonerMatchList', ['summonerName' => $summonerName])}}">
+				<button style="float: right" type="button">Update</button>
+			</a>	
+		</div>
+
 	</header>
 	
 	<!-- Section -->

@@ -20,7 +20,7 @@ class Controller extends BaseController
 		DB::disableQueryLog();
 		
 		// LeagueWrap API Object
-		$this->riot = new Api('18d9e8e5-31d5-4ce6-a48c-9eb21e27117a');
+		$this->riot = new Api('RGAPI-79c0199a-339f-45d5-a0ed-95d889ace4d4');
 		//$this->riot->setTimeout(60);
 		$this->riot->attachStaticData();
 		

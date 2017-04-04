@@ -29,12 +29,13 @@ class MatchController extends Controller
 		$totalMatches = $matchlist->totalGames;
 		$totalSkipped = 0;
 		$totalAdded = 0;
+		$responseMsg = "";
 		foreach($matches as $match) {
 			$data = [];
 			$data['matchId'] = $match->matchId;
 			
 			if (!$this->matchExists($data['matchId'], $summonerId)) {
-				echo sprintf("[ADD] Adding match %s for summoner %s to DB"."<br>", $data['matchId'], $summonerId);
+				$responseMsg.=sprintf("[ADD] Adding match %s for summoner %s to DB"."<br>", $data['matchId'], $summonerId);
 				$matchDetails = $this->getMatch($data['matchId']);
 				$teamDmgToChamps = 0;
 				$teamDmgTaken = 0;
@@ -128,7 +129,8 @@ class MatchController extends Controller
 				$totalSkipped++;
 			}
 		}
-		echo sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
+		$responseMsg.=sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
+		return redirect()->back()->with('message', $responseMsg);
 	}
 	
 	public function matchExists($matchId, $summonerId) {
