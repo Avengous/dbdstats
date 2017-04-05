@@ -91,33 +91,32 @@
   </table>
   <hr />
   <table style="float: left; width: 50%">
+	@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
+	@php ($summonerId = App::make("App\Http\Controllers\V1\ReportController")->getSummonerIdByName($summonerName))
     <tr>
-		<td><strong>Solo/Duo Win Rates<strong></td>
-		<td />
+		<th><strong>Duo Win Rates<strong></th>
+		<th /><th /><th />
     </tr>
 	<tr>
-		<td>Player</td>
-		<td>Win Rate</td>
+		<th>Player</th>
+		<th>Wins</th>
+		<th>Losses</th>
+		<th>Win Rate</th>
 	</tr>
-	<tr>
-		<td>Player</td>
-		<td>0%</td>
-	</tr>
-	<tr>
-		<td>Player</td>
-		<td>0%</td>
-	</tr>
-	<tr>
-		<td>Player</td>
-		<td>0%</td>
-	</tr>
-	<tr>
-		<td>Player</td>
-		<td>0%</td>
-	</tr>
-	<tr>
-		<td>Player</td>
-		<td>0%</td>
-	</tr>
+	@foreach ($summoners as $summoner)
+		@php ($duo = [$summoner->summonerId, $summonerId])
+		@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->multiSummonerWinRate($duo))
+		@if ($summoner->name != $summonerName)
+			<tr>
+				<td>{{ $summoner->name }}</td>
+				<td>{{ $stats['wins'] }}</td>
+				<td>{{ $stats['losses'] }}</td>
+				@if ($stats['gamesPlayed'] != 0)
+					<td>{{ round($stats['wins']/$stats['gamesPlayed'], 2)*100 }}%</td>
+				@else <td>N/A</td>
+				@endif
+			</tr>
+		@endif
+	@endforeach
   </table>
 </div>

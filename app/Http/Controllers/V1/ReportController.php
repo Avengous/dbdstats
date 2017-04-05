@@ -65,5 +65,28 @@ class ReportController extends Controller
 
 		return $result;
 	}
-
+	
+	public function multiSummonerWinRate($summonerIds) {
+		$matches = $this->sharedMatchWinRateBySummonerIds($summonerIds);
+		$stats = [];
+		$stats['wins'] = 0;
+		$stats['losses'] = 0;
+		foreach ($matches as $match) {
+			if ($match->winner == 0) {
+				$stats['losses']++;
+			} elseif ($match->winner == 1) {
+				$stats['wins']++;
+			}
+		}
+		$stats['gamesPlayed'] = $stats['wins'] + $stats['losses'];
+		return $stats;
+	}
+	
+	public function getSummonerIdByName($name) {
+		return $this->summonerByName($name, $cols='summonerId')->get()[0]->summonerId;
+	}
+	
+	public function getAllSummonerNames() {
+		return $this->summoners(['summonerId', 'name']);
+	}
 }
