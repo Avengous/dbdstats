@@ -45,21 +45,9 @@ trait Queries {
 	}
 	
 	protected function sharedMatchWinRateBySummonerIds($summonerIds, $queueType=['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'TEAM_BUILDER_DRAFT_RANKED_5x5']) {
-		$matches = [];
-		$query = DB::Table('match_details')->select(['winner', count('matchId'), 'summonerId'])->groupBy(['matchId'])->whereIn('summonerId', $summonerIds)->whereIn('queueType', $queueType)->havingRaw('COUNT(matchId) = 2')->get();
-		
-		//This is slow but unsure how else to do it.
-		foreach ($query as $record) {
-			
-			if ($record) {
-				//
-			}
-		}
-		
-		//array_push();
-		//$query = DB::Table('match_details')->groupBy('matchId')->select(['winner', 'matchId', 'summonerId'])->havingRaw('COUNT(matchId) = 2')->whereIn('summonerId', $summonerIds)->whereIn('queueType', $queueType)->get();
-		echo $query.'<br>'.'<br>';
-		//->whereIn('summonerId', $summonerIds)
+		$idString = "'".implode("','",$summonerIds);
+		$queueString = "'".implode("','",$queueType);
+		$query = DB::select(sprintf("SELECT matchId, winner FROM match_details a INNER JOIN ( SELECT matchId AS mid FROM match_details WHERE summonerId = %s ) b ON a.matchId = b.mid INNER JOIN ( SELECT matchId as countmid, count(id) AS count FROM match_details GROUP BY matchId HAVING count = 2 ) c ON a.matchId = c.countmid WHERE a.summonerId = %s AND a.queuetype IN (%s');", $summonerIds[0], $summonerIds[1], $queueString));
 		return $query;
 	}
 	
