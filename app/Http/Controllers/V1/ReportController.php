@@ -66,8 +66,8 @@ class ReportController extends Controller
 		return $result;
 	}
 	
-	public function multiSummonerWinRate($summonerIds) {
-		$matches = $this->sharedMatchWinRateBySummonerIds($summonerIds);
+	public function multiSummonerWinRate($summonerIds, $queueType=['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'TEAM_BUILDER_DRAFT_RANKED_5x5']) {
+		$matches = $this->sharedMatchWinRateBySummonerIds($summonerIds, $queueType);
 		$stats = [];
 		$stats['wins'] = 0;
 		$stats['losses'] = 0;

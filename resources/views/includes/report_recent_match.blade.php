@@ -5,7 +5,7 @@
 		<h4>Recent Matches</h4>
 		
 			<tr>
-				<th>Date</th>
+				<th style="width:100px; max-width:100px; display:inline-block;">Date</th>
 				<th>Duration</th>
 				<th>Winner</th>
 				<th>Queue</th>
@@ -15,11 +15,13 @@
 				<th>K|D|A</th>
 				<th>KDA</th>
 				<th>KP</th>
+				<th>DP</th>
 				<th>CS</th>
 				<th>CS Diff@10</th>
 				<th>CS Diff@20</th>
-				<th>Gold/Share</th>
-				<th>Dmg/Share</th>
+				<th>Gold / Share</th>
+				<th>Dmg / Share</th>
+				<th>DmgTaken / Share</th>
 				<th>Details</th>
 			</tr>
 			@foreach ($matches as $match)
@@ -52,11 +54,13 @@
 				@endif
 				</td>
 				<td>{{ $match->pctKillParticipation *100}}%</td>
+				<td>{{$match->pctTeamDeaths*100}}%</td>
 				<td>{{ $match->minionsKilled + $match->neutralMinionsKilled }}</td>
 				<td>{{ $csDiffPerMinDeltas['zeroToTen'] or 'N/A' }}</td>
 				<td>{{ $csDiffPerMinDeltas['tenToTwenty'] or 'N/A' }}</td>
 				<td>{{ $match->goldEarned }} {{ $match->pctTeamGoldShare * 100}}%</td>
 				<td>{{ $match->totalDamageDealtToChampions }} {{ $match->pctTeamDamageDealtToChampions * 100 }}%</td>
+				<td>{{ $match->totalDamageTaken }} {{ $match->pctTeamDamageTaken * 100 }}%</td>
 				<td><a href={{ sprintf("/summoner/%s/%s/details",$summonerName,$match->matchId) }}>Click</a></td>
 			</tr>
 			@endforeach

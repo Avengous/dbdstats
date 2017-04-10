@@ -17,7 +17,7 @@ Route::get('/', function () {
 */
 
 Route::get('/', function () {
-    return redirect('/summoner/Whambulance');
+    return view('pages.home');
 });
 
 Route::get('summoner/{summonerName}', function($summonerName = 'Whambulance')
