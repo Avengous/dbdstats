@@ -21,7 +21,7 @@ class MatchController extends Controller
 		return $this->riot->match()->match($matchId, $timeline);
 	}
 	
-	public function verifySummonerMatchList($summonerName, $allMatches=false, ) {
+	public function verifySummonerMatchList($summonerName, $allMatches=false) {
 		set_time_limit(36000);
 		$summonerId = $this->summonerIdByName($summonerName);
 		if ($allMatches) {
