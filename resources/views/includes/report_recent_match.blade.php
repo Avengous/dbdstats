@@ -1,7 +1,7 @@
 
 	<div>
 		@php ($matches = App::make("App\Http\Controllers\V1\ReportController")->recentMatchDetails($summonerName))
-		<table>
+		<table style="padding: 0 0 0 0; border: 1px solid grey;">
 		<h4>Recent Matches</h4>
 		
 			<tr>

@@ -38,4 +38,4 @@ Route::get('summoner/{summonerId}/update', 'V1\SummonerController@postSummoner')
 Route::get('staticdata/champions/update', 'V1\StaticDataController@updateChampionList');
 
 //Test Route
-Route::get('/test', 'V1\ReportController@getAllSummonerNames');
+Route::get('/test', 'V1\ReportController@getChampionsStats');

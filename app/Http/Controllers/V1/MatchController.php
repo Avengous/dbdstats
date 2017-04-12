@@ -14,7 +14,6 @@ class MatchController extends Controller
 	public function getMatchList($summonerName, $beginIndex=null, $endIndex=null){
 		$summonerId = $this->summonerIdByName($summonerName);
 		$matchlist = $this->riot->matchlist()->matchlist($summonerId, null, null, null, $beginIndex, $endIndex, null, null);
-		
 		return $matchlist;
 	}
 	

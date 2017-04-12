@@ -56,43 +56,16 @@ trait Queries {
 		return DB::Table('summoners')->select($cols)->get();
 	}
 	
-	protected function seasonGroups($season) {
-		switch($season) {
-			case 4:
-				return ['SEASON2014'];
-			case 5:
-				return ['PRESEASON2015', 'SEASON2015'];
-			case 6:
-				return ['PRESEASON2016', 'SEASON2016'];
-			case 7:
-				return ['PRESEASON2017'];
-		}
-	}
-	
-	protected function queueGroups($queue) {
-		switch($queue) {
-			case 'SOLO':
-				return ['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5'];
-			case 'FLEX':
-				return ['RANKED_FLEX_SR'];
-			case 'DYNAMIC':
-				return ['TEAM_BUILDER_DRAFT_RANKED_5x5'];
-			case 'TEAM':
-				return ['RANKED_TEAM_5x5'];
-			default:
-				return [''];
-		}
-	}
-	
-	protected function arrayToCsvString($col, $val) {
-		//
-	}
-	
-	protected function championPlayedCount($summonerId, $queue=NULL, $season='') {
-		$queueString = "AND %s = %s";
-		$seasonString = '';
-		$query = sprintf("SELECT championId, count(championId) FROM match_details WHERE summonerId = %s %s %s GROUP BY championId ORDER BY count(championId) DESC;", $summonerId, $queueString, $seasonString);
-		
+	protected function championPlayedCount($summonerId, $queues, $seasons, $count) {
+		$query = DB::table('match_details')
+			->select(DB::raw('championId, sum(winner) as wins, COUNT(championId) as count, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
+				->where('summonerId', $summonerId)
+				->whereIn('queueType', $queues)
+				->whereIn('season', $seasons)
+				->groupBy('championId')
+				->orderBy('count', 'desc')
+				->take($count)->get();
+		return $query;
 	}
 	
 	

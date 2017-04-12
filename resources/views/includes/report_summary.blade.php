@@ -1,122 +1,70 @@
-<hr />
 <div>
-  <table style="float: left; width: 50%; border-right: 1px solid #ddd">
-    <tr>
-		<td><strong>Solo Queue<strong></td>
-		<td />
-		<td />
-		<td />
-    </tr>
-	<tr>
-		<td>Position</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Top</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Jungle</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Mid</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>ADC</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Support</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-  </table>
-  
-  <table style="float: left; width: 50%">
-    <tr>
-      <td><strong>Flex Queue<strong></td>
-	  <td />
-	  <td />
-	  <td />
-    </tr>
-	<tr>
-		<td>Position</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Top</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Jungle</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Mid</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>ADC</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-	<tr>
-		<td>Support</td>
-		<td>KDA</td>
-		<td>Played</td>
-		<td>Weight</td>
-	</tr>
-  </table>
-  <hr />
-  <table style="float: left; width: 50%">
-	@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
 	@php ($summonerId = App::make("App\Http\Controllers\V1\ReportController")->getSummonerIdByName($summonerName))
-    <tr>
+	<div><h4>Solo Champion Statistics</h4>
+		@php ($seasons = [7,6,5,4, 'All'])
+		<table style="margin-bottom: 0px;">
+			<tr>
+				@foreach ($seasons as $season)
+					<th style="text-align: center; padding: 0 0 0 0; border: 1px solid grey;">
+						<strong>Season {{$season}}</strong>
+					</th>
+				@endforeach
+			</tr>
+			<tr>
+				@foreach ($seasons as $season)
+					<td style="padding: 0 0 0 0; border: 1px solid grey;">
+						<table style="margin: 0 0 0 0">
+							<tr>
+								<th>Champion</th>
+								<th>KDA</th>
+								<th>Played</th>
+								<th>Win Rate</th>
+							</tr>
+							@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'SOLO', $season, 5))
+							@foreach ($champions as $champ)
+								@php ($champName = App::make("App\Http\Controllers\V1\ReportController")->championName($champ->championId))
+								<tr>
+									<td style="white-space: nowrap">{{$champName}}</td>
+									<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
+									<td>{{$champ->count}}</td>
+									<td>{{round($champ->wins/$champ->count, 2)*100}}%</td>
+								</tr>
+							@endforeach
+						</table>
+					</td>
+				@endforeach
+			</tr>
+		</table>
+	</div>
+	
+	<hr/>
+	
+	<table style="float: left; width: 50%; padding: 0 0 0 0; border: 1px solid grey;">
+		@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
+	<tr style="padding: 0 0 0 0; border: 1px solid grey;">
 		<th><strong>Duo Win Rates<strong></th>
-		<th /><th /><th />
-    </tr>
+		<th/><th/><th/>
+	</tr>
 	<tr>
 		<th>Player</th>
 		<th>Wins</th>
 		<th>Losses</th>
 		<th>Win Rate</th>
 	</tr>
-	@foreach ($summoners as $summoner)
-		@php ($duo = [$summoner->summonerId, $summonerId])
-		@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->multiSummonerWinRate($duo))
-		@if ($summoner->name != $summonerName)
-			<tr>
-				<td>{{ $summoner->name }}</td>
-				<td>{{ $stats['wins'] }}</td>
-				<td>{{ $stats['losses'] }}</td>
-				@if ($stats['gamesPlayed'] != 0)
-					<td>{{ round($stats['wins']/$stats['gamesPlayed'], 2)*100 }}%</td>
-				@else <td>N/A</td>
-				@endif
-			</tr>
-		@endif
-	@endforeach
-  </table>
+		@foreach ($summoners as $summoner)
+			@php ($duo = [$summoner->summonerId, $summonerId])
+			@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->multiSummonerWinRate($duo))
+			@if ($summoner->name != $summonerName)
+				<tr>
+					<td>{{ $summoner->name }}</td>
+					<td>{{ $stats['wins'] }}</td>
+					<td>{{ $stats['losses'] }}</td>
+					@if ($stats['gamesPlayed'] != 0)
+						<td>{{ round($stats['wins']/$stats['gamesPlayed'], 2)*100 }}%</td>
+					@else <td>N/A</td>
+					@endif
+				</tr>
+			@endif
+		@endforeach
+	</table>
 </div>

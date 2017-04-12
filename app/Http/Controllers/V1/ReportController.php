@@ -89,4 +89,47 @@ class ReportController extends Controller
 	public function getAllSummonerNames() {
 		return $this->summoners(['summonerId', 'name']);
 	}
+	
+	protected function seasonGroups($season) {
+		switch($season) {
+			case 4:
+				return ['SEASON2014'];
+			case 5:
+				return ['PRESEASON2015', 'SEASON2015'];
+			case 6:
+				return ['PRESEASON2016', 'SEASON2016'];
+			case 7:
+				return ['PRESEASON2017'];
+			default:
+				return ['SEASON2014', 'PRESEASON2015', 'SEASON2015', 'PRESEASON2016', 'SEASON2016', 'PRESEASON2017'];
+		}
+	}
+	
+	protected function queueGroups($queue) {
+		$solo = ['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5'];
+		$flex = ['RANKED_FLEX_SR'];
+		$dynamic = ['TEAM_BUILDER_DRAFT_RANKED_5x5'];
+		$team = ['RANKED_TEAM_5x5'];
+		switch($queue) {
+			case 'SOLO':
+				return $solo;
+			case 'FLEX':
+				return $flex;
+			case 'DYNAMIC':
+				return $dynamic;
+			case 'TEAM':
+				return $team;
+			default:
+				return ['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'RANKED_FLEX_SR', 'TEAM_BUILDER_DRAFT_RANKED_5x5', 'RANKED_TEAM_5x5'];
+		}
+	}
+	
+	public function getChampionsStats($summonerId=23486636, $queue=null, $season=null, $count=10) {
+		if ($season == 6) {
+			$queue = 'DYNAMIC';
+		}
+		$queues = $this->queueGroups($queue);
+		$seasons = $this->seasonGroups($season);
+		return $this->championPlayedCount($summonerId, $queues, $seasons, $count);
+	}
 }
