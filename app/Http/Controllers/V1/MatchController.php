@@ -136,7 +136,7 @@ class MatchController extends Controller
 		}
 		$responseMsg.=sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
 		$this->multiSummonerWinRate($summonerId);
-		if !($auto){
+		if (!$auto){
 			return redirect()->back()->with('message', $responseMsg);
 		}
 	}
