@@ -135,6 +135,7 @@ class MatchController extends Controller
 			}
 		}
 		$responseMsg.=sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
+		$this->multiSummonerWinRate($summonerId);
 		return redirect()->back()->with('message', $responseMsg);
 	}
 	
@@ -144,6 +145,34 @@ class MatchController extends Controller
 			return false;
 		} else {
 			return true;
+		}
+	}
+	
+	public function multiSummonerWinRate($summonerId, $queueType=['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'TEAM_BUILDER_DRAFT_RANKED_5x5']) {
+		$summoners = $this->summoners(['summonerId']);
+		foreach ($summoners as $summoner) {
+			if ($summoner->summonerId != $summonerId) {
+				$data = [];
+				$data['duoId'] = $summonerId + $summoner->summonerId;
+				$data['summonerIds'] = serialize([$summonerId, $summoner->summonerId]);
+				$data['wins'] = 0;
+				$data['losses'] = 0;
+				$matches = $this->sharedMatchWinRateBySummonerIds([$summonerId, $summoner->summonerId], $queueType);
+				foreach ($matches as $match) {
+					if ($match->winner == 0) {
+						$data['losses']++;
+					} elseif ($match->winner == 1) {
+						$data['wins']++;
+					}
+				}
+				$data['winrate'] = round($data['wins']/($data['wins'] + $data['losses']), 2);
+				if($this->recordExists('duo_stats', [['duoId', '=', $data['duoId']]])) {
+					DB::table('duo_stats')->where('duoId', $data['duoId'])->update($data);
+				}
+				else {
+					DB::table('duo_stats')->insert($data);
+				}	
+			}
 		}
 	}
 }

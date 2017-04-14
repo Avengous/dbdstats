@@ -4,7 +4,7 @@
 		<table style="padding: 0 0 0 0; border: 1px solid grey;">
 		<h4>Recent Matches</h4>
 		
-			<tr>
+			<tr style="border: 1px solid grey;">
 				<th style="width:100px; max-width:100px; display:inline-block;">Date</th>
 				<th>Duration</th>
 				<th>Winner</th>

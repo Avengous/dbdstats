@@ -5,7 +5,7 @@
 		<table style="margin-bottom: 0px;">
 			<tr>
 				@foreach ($seasons as $season)
-					<th style="text-align: center; padding: 0 0 0 0; border: 1px solid grey;">
+					<th style="text-align: center; padding: 0 0  0; border: 1px solid grey;">
 						<strong>Season {{$season}}</strong>
 					</th>
 				@endforeach
@@ -52,16 +52,17 @@
 		<th>Win Rate</th>
 	</tr>
 		@foreach ($summoners as $summoner)
-			@php ($duo = [$summoner->summonerId, $summonerId])
-			@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->multiSummonerWinRate($duo))
 			@if ($summoner->name != $summonerName)
+				@php ($duo = [$summoner->summonerId, $summonerId])
+				@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo)[0])
 				<tr>
 					<td>{{ $summoner->name }}</td>
-					<td>{{ $stats['wins'] }}</td>
-					<td>{{ $stats['losses'] }}</td>
-					@if ($stats['gamesPlayed'] != 0)
-						<td>{{ round($stats['wins']/$stats['gamesPlayed'], 2)*100 }}%</td>
-					@else <td>N/A</td>
+					<td>{{ $stats->wins }}</td>
+					<td>{{ $stats->losses }}</td>
+					@if ($stats->wins + $stats->losses != 0)
+						<td>{{ $stats->winrate*100 }}%</td>
+					@else 
+						<td>N/A</td>
 					@endif
 				</tr>
 			@endif

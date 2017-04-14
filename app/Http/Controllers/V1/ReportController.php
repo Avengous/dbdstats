@@ -66,20 +66,9 @@ class ReportController extends Controller
 		return $result;
 	}
 	
-	public function multiSummonerWinRate($summonerIds, $queueType=['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'TEAM_BUILDER_DRAFT_RANKED_5x5']) {
-		$matches = $this->sharedMatchWinRateBySummonerIds($summonerIds, $queueType);
-		$stats = [];
-		$stats['wins'] = 0;
-		$stats['losses'] = 0;
-		foreach ($matches as $match) {
-			if ($match->winner == 0) {
-				$stats['losses']++;
-			} elseif ($match->winner == 1) {
-				$stats['wins']++;
-			}
-		}
-		$stats['gamesPlayed'] = $stats['wins'] + $stats['losses'];
-		return $stats;
+	public function getDuoStats($summonerIds) {
+		$data = DB::table('duo_stats')->select('*')->where('duoId', array_sum($summonerIds))->get();
+		return $data;
 	}
 	
 	public function getSummonerIdByName($name) {

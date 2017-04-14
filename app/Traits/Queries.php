@@ -68,5 +68,12 @@ trait Queries {
 		return $query;
 	}
 	
-	
+	protected function recordExists($table, $where) {
+		$count = DB::table($table)->select('*')->where($where)->count();
+		if ($count == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
