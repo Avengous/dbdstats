@@ -54,17 +54,19 @@
 		@foreach ($summoners as $summoner)
 			@if ($summoner->name != $summonerName)
 				@php ($duo = [$summoner->summonerId, $summonerId])
-				@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo)[0])
-				<tr>
-					<td>{{ $summoner->name }}</td>
-					<td>{{ $stats->wins }}</td>
-					<td>{{ $stats->losses }}</td>
-					@if ($stats->wins + $stats->losses != 0)
-						<td>{{ $stats->winrate*100 }}%</td>
-					@else 
-						<td>N/A</td>
-					@endif
-				</tr>
+				@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo))
+				@if ($stats)
+					<tr>
+						<td>{{ $summoner->name }}</td>
+						<td>{{ $stats->wins }}</td>
+						<td>{{ $stats->losses }}</td>
+						@if ($stats->wins + $stats->losses != 0)
+							<td>{{ $stats->winrate*100 }}%</td>
+						@else 
+							<td>N/A</td>
+						@endif
+					</tr>
+				@endif
 			@endif
 		@endforeach
 	</table>

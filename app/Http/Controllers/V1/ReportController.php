@@ -67,8 +67,13 @@ class ReportController extends Controller
 	}
 	
 	public function getDuoStats($summonerIds) {
-		$data = DB::table('duo_stats')->select('*')->where('duoId', array_sum($summonerIds))->get();
-		return $data;
+		$duoId = array_sum($summonerIds);
+		if($this->recordExists('duo_stats', [['duoId', '=', $duoId]])) {
+			$data = DB::table('duo_stats')->select('*')->where('duoId', $duoId)->get();
+			return $data[0];
+		} else {
+			return false;
+		}
 	}
 	
 	public function getSummonerIdByName($name) {
