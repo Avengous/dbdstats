@@ -5,8 +5,13 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Http\Controllers\V1\MatchController as Match;
+use App\Traits\Queries;
+
 class Kernel extends ConsoleKernel
 {
+	use Queries;
+	
     /**
      * The Artisan commands provided by your application.
      *
@@ -26,6 +31,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+		
+		$summoners = $this->summoners(['summonerId', 'name']);
+		foreach ($summoners as $summoner) {
+			$schedule->call(function () {
+				Match::verifySummonerMatchList($summoner->name, false, true);
+			})->everyThirtyMinutes();
+		}
     }
 
     /**

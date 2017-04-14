@@ -21,7 +21,7 @@ class MatchController extends Controller
 		return $this->riot->match()->match($matchId, $timeline);
 	}
 	
-	public function verifySummonerMatchList($summonerName, $allMatches=false) {
+	public function verifySummonerMatchList($summonerName, $allMatches=false, $auto=false) {
 		set_time_limit(36000);
 		$summonerId = $this->summonerIdByName($summonerName);
 		if ($allMatches) {
@@ -136,7 +136,9 @@ class MatchController extends Controller
 		}
 		$responseMsg.=sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
 		$this->multiSummonerWinRate($summonerId);
-		return redirect()->back()->with('message', $responseMsg);
+		if !($auto){
+			return redirect()->back()->with('message', $responseMsg);
+		}
 	}
 	
 	public function matchExists($matchId, $summonerId) {
