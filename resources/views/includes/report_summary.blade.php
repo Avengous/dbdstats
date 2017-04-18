@@ -1,6 +1,6 @@
 <div>
 	@php ($summonerId = App::make("App\Http\Controllers\V1\ReportController")->getSummonerIdByName($summonerName))
-	<div><h4>Solo Champion Statistics</h4>
+	<div><h4 style="margin: 0 0 0 0;">Solo Champion Statistics</h4>
 		@php ($seasons = [7,6,5,4, 'All'])
 		<table style="margin-bottom: 0px;">
 			<tr>
@@ -37,37 +37,35 @@
 		</table>
 	</div>
 	
-	<hr/>
-	
-	<table style="float: left; width: 50%; padding: 0 0 0 0; border: 1px solid grey;">
-		@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
-	<tr style="padding: 0 0 0 0; border: 1px solid grey;">
-		<th><strong>Duo Win Rates<strong></th>
-		<th/><th/><th/>
-	</tr>
-	<tr>
-		<th>Player</th>
-		<th>Wins</th>
-		<th>Losses</th>
-		<th>Win Rate</th>
-	</tr>
-		@foreach ($summoners as $summoner)
-			@if ($summoner->name != $summonerName)
-				@php ($duo = [$summoner->summonerId, $summonerId])
-				@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo))
-				@if ($stats)
-					<tr>
-						<td>{{ $summoner->name }}</td>
-						<td>{{ $stats->wins }}</td>
-						<td>{{ $stats->losses }}</td>
-						@if ($stats->wins + $stats->losses != 0)
-							<td>{{ $stats->winrate*100 }}%</td>
-						@else 
-							<td>N/A</td>
-						@endif
-					</tr>
+	<br>
+	<div>
+		<h4 style="margin: 0 0 0 0;">Duo Win Rates</h4>
+		<table style="float: left; width: 50%; border: 1px solid grey;">
+			@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
+		<tr style="border: 1px solid grey;">
+			<th>Player</th>
+			<th>Wins</th>
+			<th>Losses</th>
+			<th>Win Rate</th>
+		</tr>
+			@foreach ($summoners as $summoner)
+				@if ($summoner->name != $summonerName)
+					@php ($duo = [$summoner->summonerId, $summonerId])
+					@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo))
+					@if ($stats)
+						<tr>
+							<td>{{ $summoner->name }}</td>
+							<td>{{ $stats->wins }}</td>
+							<td>{{ $stats->losses }}</td>
+							@if ($stats->wins + $stats->losses != 0)
+								<td>{{ $stats->winrate*100 }}%</td>
+							@else 
+								<td>N/A</td>
+							@endif
+						</tr>
+					@endif
 				@endif
-			@endif
-		@endforeach
-	</table>
+			@endforeach
+		</table>
+	</div>
 </div>

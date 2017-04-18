@@ -18,9 +18,12 @@
 			<!-- <div id="rank">FLEX: {{ $summonerRank['flex'] }}</div> -->
 		</a>
 		<div style="float: right; width: 50px;">
+			<a href="{{action('V1\MatchController@verifySummonerMatchList', ['summonerName' => $summonerName, 'allMatches' => true])}}">
+				<button style="float: right; margin-left: 5px;" type="button">Validate</button>
+			</a>
 			<a href="{{action('V1\MatchController@verifySummonerMatchList', ['summonerName' => $summonerName])}}">
 				<button style="float: right" type="button">Update</button>
-			</a>	
+			</a>
 		</div>
 
 	</header>

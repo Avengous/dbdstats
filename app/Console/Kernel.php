@@ -32,12 +32,30 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 		
+		/*
 		$summoners = $this->summoners(['summonerId', 'name']);
 		foreach ($summoners as $summoner) {
 			$schedule->call(function () {
 				Match::verifySummonerMatchList($summoner->name, false, true);
 			})->everyThirtyMinutes();
-		}
+		}*/
+		
+		// Scheduler is failing. Hard coding pages to update. May need to use $schedule->command()
+		$schedule->call(function () {
+						Match::verifySummonerMatchList('Krystic', false, true);
+					})->everyThirtyMinutes();
+		$schedule->call(function () {
+						Match::verifySummonerMatchList('Oliver Phillips', false, true);
+					})->everyThirtyMinutes();
+		$schedule->call(function () {
+						Match::verifySummonerMatchList('Avengous', false, true);
+					})->everyThirtyMinutes();
+		$schedule->call(function () {
+						Match::verifySummonerMatchList('Revenant', false, true);
+					})->everyThirtyMinutes();
+		$schedule->call(function () {
+						Match::verifySummonerMatchList('Whambulance', false, true);
+					})->everyThirtyMinutes();
     }
 
     /**

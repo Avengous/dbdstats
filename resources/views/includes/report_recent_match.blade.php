@@ -2,7 +2,7 @@
 	<div>
 		@php ($matches = App::make("App\Http\Controllers\V1\ReportController")->recentMatchDetails($summonerName))
 		<table style="padding: 0 0 0 0; border: 1px solid grey;">
-		<h4>Recent Matches</h4>
+		<h4 style="margin: 0 0 0 0;">Recent Matches</h4>
 		
 			<tr style="border: 1px solid grey;">
 				<th style="width:100px; max-width:100px; display:inline-block;">Date</th>

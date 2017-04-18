@@ -27,8 +27,7 @@ class MatchController extends Controller
 		if ($allMatches) {
 			$matchlist = $this->getMatchList($summonerName);
 		} else {
-			
-			$matchlist = $this->getMatchList($summonerName, 0, 50);
+			$matchlist = $this->getMatchList($summonerName, 0, 25);
 		}
 		$matches = $matchlist->matches;
 		$totalMatches = $matchlist->totalGames;
