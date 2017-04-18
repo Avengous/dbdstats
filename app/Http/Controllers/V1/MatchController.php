@@ -166,7 +166,12 @@ class MatchController extends Controller
 						$data['wins']++;
 					}
 				}
-				$data['winrate'] = round($data['wins']/($data['wins'] + $data['losses']), 2);
+				if ($data['wins'] + $data['losses'] == 0) {
+					$data['winrate'] = 0;
+				} else {
+					$data['winrate'] = round($data['wins']/($data['wins'] + $data['losses']), 2);
+				}
+				
 				if($this->recordExists('duo_stats', [['duoId', '=', $data['duoId']]])) {
 					DB::table('duo_stats')->where('duoId', $data['duoId'])->update($data);
 				}
