@@ -12,27 +12,41 @@ class SummonerController extends Controller
 	use Queries;
 	
     public function postSummoner($id) {
-		// Bug: If $summoner isn't ranked they cannot be added.
 		$summoner 		= $this->riot->summoner()->info($id);
 		$summonerId 	= $summoner->id;
 		$name			= $summoner->name;
 		$revisionDate	= $summoner->revisionDate;
-		
 		$league 		= $this->riot->league()->league($summoner);
-		$solo			= $league[0]->entry($summonerId);
-		$flex			= $league[1]->entry($summonerId);
 		
-		$soloTier		= $league[0]->tier;
-		$soloDivision   = $solo->division;
-		$soloWins		= $solo->wins;
-		$soloLosses		= $solo->losses;
-		$soloLP			= $solo->leaguePoints;
+		if (empty($league[0]->tier)) {
+			$soloTier = 'WOOD';
+			$soloDivision   = 'VI';
+			$soloWins		= 0;
+			$soloLosses		= 0;
+			$soloLP			= 0;
+		} else {
+			$soloTier = $league[0]->tier;
+			$solo = $league[0]->entry($summonerId);
+			$soloDivision   = $solo->division;
+			$soloWins		= $solo->wins;
+			$soloLosses		= $solo->losses;
+			$soloLP			= $solo->leaguePoints;
+		}
 		
-		$flexTier 		= $league[1]->tier;
-		$flexDivision	= $flex->division;
-		$flexWins		= $flex->wins;
-		$flexLosses		= $flex->losses;
-		$flexLP			= $flex->leaguePoints;
+		if (empty($league[1]->tier)) {
+			$flexTier = 'WOOD';
+			$flexDivision	= 'VI';
+			$flexWins		= 0;
+			$flexLosses		= 0;
+			$flexLP			= 0;
+		} else {
+			$flexTier = $league[1]->tier;
+			$flex = $league[1]->entry($summonerId);
+			$flexDivision	= $flex->division;
+			$flexWins		= $flex->wins;
+			$flexLosses		= $flex->losses;
+			$flexLP			= $flex->leaguePoints;
+		}
 		
 		$data			= [
 				'summonerId' 	=> $summonerId,
