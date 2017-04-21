@@ -3480,6 +3480,7 @@
 		-webkit-flex-shrink: 1;
 		-ms-flex-shrink: 1;
 		flex-shrink: 1;
+		overflow: scroll;
 		width: 100%;
 	}
 
