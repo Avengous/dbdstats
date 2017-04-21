@@ -11,9 +11,9 @@ class MatchController extends Controller
 {
 	use Queries;
 	
-	public function getMatchList($summonerName, $beginIndex=null, $endIndex=null){
+	public function getMatchList($summonerName, $beginIndex=null, $endIndex=null, $seasons=null){
 		$summonerId = $this->summonerIdByName($summonerName);
-		$matchlist = $this->riot->matchlist()->matchlist($summonerId, null, null, null, $beginIndex, $endIndex, null, null);
+		$matchlist = $this->riot->matchlist()->matchlist($summonerId, null, $seasons, null, $beginIndex, $endIndex, null, null);
 		return $matchlist;
 	}
 	
@@ -21,13 +21,13 @@ class MatchController extends Controller
 		return $this->riot->match()->match($matchId, $timeline);
 	}
 	
-	public function verifySummonerMatchList($summonerName, $allMatches=false, $auto=false) {
-		set_time_limit(36000);
+	public function verifySummonerMatchList($summonerName, Request $allMatches, $auto=false) {
+		set_time_limit(36000);		
 		$summonerId = $this->summonerIdByName($summonerName);
-		if ($allMatches) {
+		if ($allMatches->input('allMatches')==1) {
 			$matchlist = $this->getMatchList($summonerName);
 		} else {
-			$matchlist = $this->getMatchList($summonerName, 0, 25);
+			$matchlist = $this->getMatchList($summonerName, 0, 20);
 		}
 		$matches = $matchlist->matches;
 		$totalMatches = $matchlist->totalGames;
