@@ -16,8 +16,13 @@ class SummonerController extends Controller
 		$summonerId 	= $summoner->id;
 		$name			= $summoner->name;
 		$revisionDate	= $summoner->revisionDate;
-		$league 		= $this->riot->league()->league($summoner);
 		
+		try {
+			$league = $this->riot->league()->league($summonerId);
+		} catch (\Exception $e) {
+			$league = null;
+		}
+
 		if (empty($league[0]->tier)) {
 			$soloTier = 'WOOD';
 			$soloDivision   = 'VI';
