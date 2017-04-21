@@ -18,7 +18,12 @@ class MatchController extends Controller
 	}
 	
 	public function getMatch($matchId, $timeline=false) {
-		return $this->riot->match()->match($matchId, $timeline);
+			try {
+				return $this->riot->match()->match($matchId, $timeline);
+			} catch (Exception $e) {
+				sleep(5);
+				$this->getMatch($matchId, $timeline);
+			}
 	}
 	
 	public function verifySummonerMatchList($summonerName, Request $allMatches, $auto=false) {
