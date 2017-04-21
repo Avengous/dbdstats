@@ -2878,26 +2878,39 @@
 		margin: 0 0 2em 0;
 		width: 100%;
 	}
+		
+		table tr.highlight:hover {
+			background-color: #ff9291;
+			color: black;
+		}
+		
+		table tr.highlight:nth-child(2n + 1):hover {
+			background-color: #ff9291;
+			color: black;
+		}
+		
+		table tr.highlight td:hover {
+			font-weight: bold;
+		}
 
 		table tbody tr {
-			border: solid 1px rgba(210, 215, 217, 0.75);
 			border-left: 0;
 			border-right: 0;
-		}
+		}	
 
 			table tbody tr:nth-child(2n + 1) {
 				background-color: rgba(230, 235, 237, 0.25);
 			}
 
 		table td {
-			padding: 0.75em 0.75em;
+			padding: 0.5em 0.5em;
 		}
 
 		table th {
 			color: #3d4449;
 			font-size: 0.9em;
 			font-weight: 600;
-			padding: 0 0.75em 0.75em 0.75em;
+			padding: 0 0.5em 0.5em 0.5em;
 			text-align: left;
 		}
 
@@ -2934,7 +2947,7 @@
 			table.alt tfoot {
 				border-top: 0;
 			}
-
+		
 /* Button */
 
 	input[type="submit"],

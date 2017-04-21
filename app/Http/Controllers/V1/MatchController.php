@@ -139,7 +139,13 @@ class MatchController extends Controller
 			}
 		}
 		$responseMsg.=sprintf("[COMPLETE] Matches Skipped: %s, Added: %s"."<br>", $totalSkipped, $totalAdded);
+		
+		// Calculate Duo Win Rates
 		$this->multiSummonerWinRate($summonerId);
+		
+		// Update League/Division
+		app('App\Http\Controllers\V1\SummonerController')->postSummoner($summonerName);
+		
 		if (!$auto){
 			return redirect()->back()->with('message', $responseMsg);
 		}

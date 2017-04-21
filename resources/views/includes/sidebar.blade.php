@@ -22,9 +22,11 @@
 				<br/>
 				<ul>
 					<strong>Star Players</strong>
-					<li><a href="/summoner/Whambulance">Kytese</a></li>
-					<li><a href="/summoner/Whambulance">iHunyae</a></li>
-					<li><a href="/summoner/Whambulance">Blightning</a></li>
+					<li><a href="/summoner/Kytese">Kytese</a></li>
+					<li><a href="/summoner/Møchi">Møchi</a></li>
+					<li><a href="/summoner/Sweet Cherie">Sweet Cherie</a></li>
+					<li><a href="/summoner/Blîghtnîng">Blîghtnîng</a></li>
+					<li><a href="/summoner/Möther Theresa">Möther Theresa</a></li>
 				</ul>
 			</nav>
 	</div>

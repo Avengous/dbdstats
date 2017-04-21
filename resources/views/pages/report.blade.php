@@ -5,7 +5,6 @@
 	<!-- Header -->
 	<header id="header">
 		@php ($summonerRank = App::make("App\Http\Controllers\V1\SummonerController")->soloQueueRank($summonerName))
-		@php (App::make("App\Http\Controllers\V1\SummonerController")->postSummoner($summonerName))
 		<a class="logo">
 			<strong><font size="+2">{{$summonerName}}</font></strong> 
 			<div id="rank">

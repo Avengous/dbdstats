@@ -23,7 +23,7 @@
 							@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'SOLO', $season, 5))
 							@foreach ($champions as $champ)
 								@php ($champName = App::make("App\Http\Controllers\V1\ReportController")->championName($champ->championId))
-								<tr>
+								<tr class="highlight">
 									<td style="white-space: nowrap">{{$champName}}</td>
 									<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
 									<td>{{$champ->count}}</td>
@@ -53,7 +53,7 @@
 					@php ($duo = [$summoner->summonerId, $summonerId])
 					@php ($stats = App::make("App\Http\Controllers\V1\ReportController")->getDuoStats($duo))
 					@if ($stats)
-						<tr>
+						<tr class="highlight">
 							<td>{{ $summoner->name }}</td>
 							<td>{{ $stats->wins }}</td>
 							<td>{{ $stats->losses }}</td>

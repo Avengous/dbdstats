@@ -29,7 +29,7 @@
 			@php ($role = App::make("App\Http\Controllers\V1\ReportController")->defineMatchRole($match->role, $match->lane))
 			@php ($championName = App::make("App\Http\Controllers\V1\ReportController")->championName($match->championId))
 			@php ($matchDuration = App::make("App\Http\Controllers\V1\ReportController")->formatSeconds($match->matchDuration))
-			<tr>
+			<tr class="highlight">
 				<td>{{ date_create(date('r', $match->matchCreation/1000))->format('m-d-y') }}</td>
 				<td>{{ $matchDuration }}</td>
 				<td>
