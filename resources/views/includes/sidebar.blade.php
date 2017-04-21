@@ -27,6 +27,7 @@
 					<li><a href="/summoner/Sweet Cherie">Sweet Cherie</a></li>
 					<li><a href="/summoner/Blîghtnîng">Blîghtnîng</a></li>
 					<li><a href="/summoner/Möther Theresa">Möther Theresa</a></li>
+					<li><a href="/summoner/Wanganat0r">Wanganat0r</a></li>
 				</ul>
 			</nav>
 	</div>
