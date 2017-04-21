@@ -7,13 +7,6 @@
 		@php ($summonerRank = App::make("App\Http\Controllers\V1\SummonerController")->soloQueueRank($summonerName))
 		<a class="logo">
 			<strong><font size="+2">{{$summonerName}}</font></strong> 
-			<div id="rank">
-				{{ $summonerRank['solo'] }}
-				@if ($summonerName == 'Whambulance')
-					@php ($decimatedCount = App::make("App\Http\Controllers\V1\SummonerController")->decimationCount($summonerName))
-					| DECIMATED: {{ $decimatedCount }} 
-				@endif
-			</div>
 			<!-- <div id="rank">FLEX: {{ $summonerRank['flex'] }}</div> -->
 		</a>
 		<div style="float: right; width: 50px;">
@@ -26,6 +19,22 @@
 		</div>
 
 	</header>
+
+	<div id="rank" style="width:100%; display: inline-block;">
+		<div style="float:left;">
+			SOLO {{ $summonerRank['solo'] }}
+		</div>
+		<div style="float:right;">
+			FLEX {{ $summonerRank['flex'] }}
+		</div>
+		
+		@if ($summonerName == 'Whambulance')
+			<div style="text-align: center;">
+				@php ($decimatedCount = App::make("App\Http\Controllers\V1\SummonerController")->decimationCount($summonerName))
+				DECIMATED: {{ $decimatedCount }} 
+			</div>
+		@endif
+	</div>
 	
 	<!-- Section -->
 	<section>
