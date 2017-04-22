@@ -31,7 +31,7 @@
 					<li>
 						<a href="/summoner/Revenant">Revenant</a>
 						<a style="padding-left: 5px; padding-right: 5px;">|</a>
-						<a href="/summoner/Ironia">Revenant Umbra</a>
+						<a href="/summoner/Ironia">Ironia</a>
 					</li>
 					<li>
 						<a href="/summoner/Whambulance">Whambulance</a>
