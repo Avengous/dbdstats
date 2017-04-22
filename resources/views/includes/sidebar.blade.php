@@ -16,7 +16,7 @@
 					<li>
 						<a href="/summoner/Krystic">Krystic</a>
 						<a style="padding-left: 5px; padding-right: 5px;">|</a>
-						<a href="/summoner/oroukaH">oroukaH</a>
+						<a href="/summoner/Croxine">Croxine</a>
 					</li>
 					<li>
 						<a href="/summoner/Oliver Phillips">Oliver Phillips</a>
@@ -31,7 +31,7 @@
 					<li>
 						<a href="/summoner/Revenant">Revenant</a>
 						<a style="padding-left: 5px; padding-right: 5px;">|</a>
-						<a href="/summoner/Revenant Umbra">Revenant Umbra</a>
+						<a href="/summoner/Ironia">Revenant Umbra</a>
 					</li>
 					<li>
 						<a href="/summoner/Whambulance">Whambulance</a>
