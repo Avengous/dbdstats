@@ -37,5 +37,7 @@ Route::get('summoner/{summonerId}/update', 'V1\SummonerController@postSummoner')
 //Update champion list 
 Route::get('staticdata/champions/update', 'V1\StaticDataController@updateChampionList');
 
+Route::get('summoner/{summonerName}/decimated', 'V1\SummonerController@increaseDecimatedCount');
+
 //Test Route
 Route::get('/test', 'V1\ReportController@getChampionsStats');

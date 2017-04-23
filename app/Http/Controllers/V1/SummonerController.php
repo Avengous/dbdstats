@@ -97,12 +97,22 @@ class SummonerController extends Controller
 	public function decimationCount($summonerName) {
 		$record = $this->summonerByName($summonerName);
 		$summonerId = $record->pluck('summonerId')[0];
+		/*
 		$totalDeathCount = $this->totalDeathCount($summonerId);
 		$decimationCount = $totalDeathCount;
 		$decimationCount += $record->pluck('soloLosses')[0];
 		$decimationCount += $record->pluck('soloWins')[0];
 		$decimationCount += $record->pluck('flexLosses')[0];
 		$decimationCount += $record->pluck('flexWins')[0];
-		return $decimationCount;
+		*/
+		return $this->decimated($summonerId)[0]->decimated;
+	}
+	
+	public function increaseDecimatedCount($summonerName, $count=1) {
+		$record = $this->summonerByName($summonerName);
+		$summonerId = $record->pluck('summonerId')[0];
+		$decimationCount = $this->decimationCount($summonerName);
+		DB::table('summoners')->where('summonerId', $summonerId)->update(['decimated' => $decimationCount + $count]);
+		return redirect()->back();
 	}
 }

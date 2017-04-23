@@ -32,6 +32,9 @@
 			<div style="text-align: center;">
 				@php ($decimatedCount = App::make("App\Http\Controllers\V1\SummonerController")->decimationCount($summonerName))
 				DECIMATED: {{ $decimatedCount }} 
+				<a href="{{action('V1\SummonerController@increaseDecimatedCount', ['summonerName' => $summonerName])}}">
+					+
+				</a>
 			</div>
 		@endif
 	</div>

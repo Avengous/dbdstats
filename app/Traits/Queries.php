@@ -76,4 +76,8 @@ trait Queries {
 			return true;
 		}
 	}
+	
+	protected function decimated($summonerId) {
+		return DB::table('summoners')->select('decimated')->where([['summonerId', $summonerId]])->get();
+	}
 }

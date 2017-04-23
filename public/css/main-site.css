@@ -2119,6 +2119,10 @@
 			a:hover strong {
 				color: inherit;
 			}
+			
+		a:visited {
+			text-decoration: none !important;
+		}
 
 	strong, b {
 		color: #3d4449;
