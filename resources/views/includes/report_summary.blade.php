@@ -25,7 +25,11 @@
 								@php ($champName = App::make("App\Http\Controllers\V1\ReportController")->championName($champ->championId))
 								<tr class="highlight">
 									<td style="white-space: nowrap">{{$champName}}</td>
-									<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
+									@if ($champ->avgDeaths == 0)
+										<td style="color: red;">{{round(($champ->avgKills + $champ->avgAssists), 2)}}*</td>
+									@else
+										<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
+									@endif
 									<td>{{$champ->count}}</td>
 									<td>{{round($champ->wins/$champ->count, 2)*100}}%</td>
 								</tr>

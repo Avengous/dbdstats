@@ -13,16 +13,21 @@ class MatchController extends Controller
 	
 	public function getMatchList($summonerName, $beginIndex=null, $endIndex=null, $seasons=null){
 		$summonerId = $this->summonerIdByName($summonerName);
-		$matchlist = $this->riot->matchlist()->matchlist($summonerId, null, $seasons, null, $beginIndex, $endIndex, null, null);
-		return $matchlist;
+		try {
+			$matchlist = $this->riot->matchlist()->matchlist($summonerId, null, $seasons, null, $beginIndex, $endIndex, null, null);
+			return $matchlist;
+		} catch (\Exception $e) {
+			sleep(3);
+			return $this->getMatchList($summonerName, $beginIndex, $endIndex, $seasons);
+		}
 	}
 	
 	public function getMatch($matchId, $timeline=false) {
 			try {
 				return $this->riot->match()->match($matchId, $timeline);
-			} catch (Exception $e) {
-				sleep(5);
-				$this->getMatch($matchId, $timeline);
+			} catch (\Exception $e) {
+				sleep(3);
+				return $this->getMatch($matchId, $timeline);
 			}
 	}
 	
@@ -133,7 +138,7 @@ class MatchController extends Controller
 
 				DB::table('match_details')->insert($data);
 				$totalAdded++;
-				sleep(2.25);
+				sleep(1.5);
 			} else {
 				$totalSkipped++;
 			}

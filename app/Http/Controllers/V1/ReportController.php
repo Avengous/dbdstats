@@ -15,7 +15,7 @@ class ReportController extends Controller
         return $this->findUniqueMatchByIds($summonerId, $matchId);
     }
 	
-	public function recentMatchDetails($summonerName, $matchCount=5){
+	public function recentMatchDetails($summonerName, $matchCount=10){
 		$summonerId = $this->summonerIdByName($summonerName);
 		return $this->recentMatches($summonerId, $matchCount)->get();
 	}
