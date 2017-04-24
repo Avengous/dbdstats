@@ -29,6 +29,18 @@
 				@php ($role = App::make("App\Http\Controllers\V1\ReportController")->defineMatchRole($match->role, $match->lane))
 				@php ($championName = App::make("App\Http\Controllers\V1\ReportController")->championName($match->championId))
 				@php ($matchDuration = App::make("App\Http\Controllers\V1\ReportController")->formatSeconds($match->matchDuration))
+				
+				@if (empty($csDiffPerMinDeltas['zeroToTen']))
+					@php ($zeroToTen = 0)
+				@else
+					@php ($zeroToTen = round($csDiffPerMinDeltas['zeroToTen'], 2))
+				@endif
+				
+				@if (empty($csDiffPerMinDeltas['tenToTwenty']))
+					@php ($tenToTwenty = 0)
+				@else
+					@php ($tenToTwenty = round($csDiffPerMinDeltas['tenToTwenty'], 2))
+				@endif
 				<tr class="highlight">
 					<td>{{ date_create(date('r', $match->matchCreation/1000))->format('m-d-y') }}</td>
 					<td>{{ $matchDuration }}</td>
@@ -59,12 +71,12 @@
 					@else 
 						<td>{{ round(($match->kills+$match->assists)/$match->deaths, 2)}}</td>
 					@endif
-					<td>{{ $match->pctKillParticipation *100}}%</td>
-					<td>{{$match->pctTeamDeaths*100}}%</td>
+					<td>{{ $match->pctKillParticipation * 100 }}%</td>
+					<td>{{ $match->pctTeamDeaths*100 }}%</td>
 					<td>{{ $match->minionsKilled + $match->neutralMinionsKilled }}</td>
-					<td>{{ round($csDiffPerMinDeltas['zeroToTen'], 2) or 'N/A' }}</td>
-					<td>{{ round($csDiffPerMinDeltas['tenToTwenty'], 2) or 'N/A' }}</td>
-					<td>{{ $match->goldEarned }} {{ $match->pctTeamGoldShare * 100}}%</td>
+					<td>{{ $zeroToTen or 'N/A' }}</td>
+					<td>{{ $tenToTwenty or 'N/A' }}</td>
+					<td>{{ $match->goldEarned }} {{ $match->pctTeamGoldShare * 100 }}%</td>
 					<td>{{ $match->totalDamageDealtToChampions }} {{ $match->pctTeamDamageDealtToChampions * 100 }}%</td>
 					<td>{{ $match->totalDamageTaken }} {{ $match->pctTeamDamageTaken * 100 }}%</td>
 					<td><a href={{ sprintf("/summoner/%s/%s/details",$summonerName,$match->matchId) }}>Click</a></td>
