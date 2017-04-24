@@ -62,8 +62,8 @@
 					<td>{{ $match->pctKillParticipation *100}}%</td>
 					<td>{{$match->pctTeamDeaths*100}}%</td>
 					<td>{{ $match->minionsKilled + $match->neutralMinionsKilled }}</td>
-					<td>{{ $csDiffPerMinDeltas['zeroToTen'] or 'N/A' }}</td>
-					<td>{{ $csDiffPerMinDeltas['tenToTwenty'] or 'N/A' }}</td>
+					<td>{{ round($csDiffPerMinDeltas['zeroToTen'], 2) or 'N/A' }}</td>
+					<td>{{ round($csDiffPerMinDeltas['tenToTwenty'], 2) or 'N/A' }}</td>
 					<td>{{ $match->goldEarned }} {{ $match->pctTeamGoldShare * 100}}%</td>
 					<td>{{ $match->totalDamageDealtToChampions }} {{ $match->pctTeamDamageDealtToChampions * 100 }}%</td>
 					<td>{{ $match->totalDamageTaken }} {{ $match->pctTeamDamageTaken * 100 }}%</td>
