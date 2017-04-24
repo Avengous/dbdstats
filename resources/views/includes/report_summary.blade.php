@@ -1,6 +1,7 @@
 <div>
 	@php ($summonerId = App::make("App\Http\Controllers\V1\ReportController")->getSummonerIdByName($summonerName))
-	<div><h4 style="margin: 0 0 0 0;">Solo Champion Statistics</h4>
+	<div>
+		<h4 style="margin: 0 0 0 0;">Solo Champion Win Rates</h4>
 		@php ($seasons = [7,6,5,4, 'All'])
 		<table style="margin-bottom: 0px;">
 			<tr>
@@ -18,7 +19,7 @@
 								<th>Champion</th>
 								<th>KDA</th>
 								<th>Played</th>
-								<th>Win Rate</th>
+								<th>Win %</th>
 							</tr>
 							@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'SOLO', $season, 5))
 							@foreach ($champions as $champ)
@@ -42,16 +43,113 @@
 	</div>
 	
 	<br>
+	
+	<div>
+		<h4 style="margin: 0 0 0 0;">Flex/Team Champion Win Rates</h4>
+		@php ($seasons = [7,6,5,4, 'All'])
+		<table style="margin-bottom: 0px;">
+			<tr>
+				@foreach ($seasons as $season)
+					<th style="text-align: center; padding: 0 0  0; border: 1px solid grey;">
+						<strong>Season {{$season}}</strong>
+					</th>
+				@endforeach
+			</tr>
+			<tr>
+				@foreach ($seasons as $season)
+					<td style="padding: 0 0 0 0; border: 1px solid grey;">
+						<table style="margin: 0 0 0 0">
+							<tr>
+								<th>Champion</th>
+								<th>KDA</th>
+								<th>Played</th>
+								<th>Win %</th>
+							</tr>
+							
+							@if (in_array($season, [4, 5]))
+								@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'TEAM', $season, 5))
+							@elseif ($season == 'All')
+								@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'ALLTEAM', $season, 5))
+							@else
+								@php ($champions = App::make("App\Http\Controllers\V1\ReportController")->getChampionsStats($summonerId, 'FLEX', $season, 5))
+							@endif
+							
+							@foreach ($champions as $champ)
+								@php ($champName = App::make("App\Http\Controllers\V1\ReportController")->championName($champ->championId))
+								<tr class="highlight">
+									<td style="white-space: nowrap">{{$champName}}</td>
+									@if ($champ->avgDeaths == 0)
+										<td style="color: red;">{{round(($champ->avgKills + $champ->avgAssists), 2)}}*</td>
+									@else
+										<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
+									@endif
+									<td>{{$champ->count}}</td>
+									<td>{{round($champ->wins/$champ->count, 2)*100}}%</td>
+								</tr>
+							@endforeach
+						</table>
+					</td>
+				@endforeach
+			</tr>
+		</table>
+	</div>
+	
+	<br>
+	<!--
+	<div>
+		<h4 style="margin: 0 0 0 0;">Solo Lane Win Rates</h4>
+		@php ($seasons = [7,6,5,4, 'All'])
+		<table style="margin-bottom: 0px;">
+			<tr>
+				@foreach ($seasons as $season)
+					<th style="text-align: center; padding: 0 0  0; border: 1px solid grey;">
+						<strong>Season {{$season}}</strong>
+					</th>
+				@endforeach
+			</tr>
+			<tr>
+				@foreach ($seasons as $season)
+					<td style="padding: 0 0 0 0; border: 1px solid grey;">
+						<table style="margin: 0 0 0 0">
+							<tr>
+								<th>Lane</th>
+								<th>KDA</th>
+								<th>Played</th>
+								<th>Win %</th>
+								<th>Weight</th>
+							</tr>
+							
+							@php ($lanes = App::make("App\Http\Controllers\V1\ReportController")->getLaneStats($summonerId, 'SOLO', $season))
+							
+							@foreach ($lanes as $lane)
+								@php ($role = App::make("App\Http\Controllers\V1\ReportController")->defineMatchRole($lane->role, $lane->lane))
+								<tr class="highlight">
+									<td>{{ $role }}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							@endforeach
+						</table>
+					</td>
+				@endforeach
+			</tr>
+		</table>
+	</div>
+	
+	<br>
+	-->
 	<div style="width:100%">
 		<div style="float: left; width: 49%; ">
-			<h4 style="margin: 0 0 0 0;">Duo Win Rates</h4>
+			<h4 style="margin: 0 0 0 0;">Ranked Duo Win Rates</h4>
 			<table style="border: 1px solid grey;">
 				@php ($summoners = App::make("App\Http\Controllers\V1\ReportController")->getAllSummonerNames())
 			<tr style="border: 1px solid grey;">
 				<th>Player</th>
 				<th>Wins</th>
 				<th>Losses</th>
-				<th>Win Rate</th>
+				<th>Win %</th>
 			</tr>
 				@foreach ($summoners as $summoner)
 					@if ($summoner->name != $summonerName)
@@ -77,7 +175,7 @@
 		</div>
 	
 		<div style="float: right; width: 49%; ">
-			<h4 style="margin: 0 0 0 0;">Pentakills</h4>
+			<h4 style="margin: 0 0 0 0;">Ranked Pentakills</h4>
 			<table style="border: 1px solid grey;">
 				@php ($pentas = App::make("App\Http\Controllers\V1\ReportController")->getMultiKills($summonerName))
 			<tr style="border: 1px solid grey;">

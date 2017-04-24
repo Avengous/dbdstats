@@ -84,4 +84,16 @@ trait Queries {
 	protected function tableSelectWhere($table, $select, $where) {
 		return DB::table($table)->select($select)->where($where)->get();
 	}
+	
+	protected function rolePlayedCount($summonerId, $queues, $seasons) {
+		$query = DB::table('match_details')
+			->select(DB::raw('lane, role, sum(winner) as wins, COUNT(winner) as totalGames, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
+				->where('summonerId', $summonerId)
+				->whereIn('queueType', $queues)
+				->whereIn('season', $seasons)
+				->groupBy(['role', 'lane'])
+				->orderBy('totalGames', 'desc')
+				->get();
+		return $query;
+	}
 }

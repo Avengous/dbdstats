@@ -113,6 +113,8 @@ class ReportController extends Controller
 				return $dynamic;
 			case 'TEAM':
 				return $team;
+			case 'ALLTEAM':
+				return ['RANKED_FLEX_SR', 'TEAM_BUILDER_DRAFT_RANKED_5x5', 'RANKED_TEAM_5x5'];
 			default:
 				return ['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5', 'RANKED_FLEX_SR', 'TEAM_BUILDER_DRAFT_RANKED_5x5', 'RANKED_TEAM_5x5'];
 		}
@@ -125,6 +127,18 @@ class ReportController extends Controller
 		$queues = $this->queueGroups($queue);
 		$seasons = $this->seasonGroups($season);
 		return $this->championPlayedCount($summonerId, $queues, $seasons, $count);
+	}
+	
+	public function getLaneStats($summonerId, $queue=null, $season=null) {
+		$queues = $this->queueGroups($queue);
+		$seasons = $this->seasonGroups($season);
+		$data = $this->rolePlayedCount($summonerId, $queues, $seasons);
+		$roles = [];
+		foreach ($data as $i) {
+			//if ($data->)
+		}
+		
+		return $data;
 	}
 	
 	public function getMultiKills($summonerName, $multiKillCount=5) {
