@@ -126,4 +126,8 @@ class ReportController extends Controller
 		$seasons = $this->seasonGroups($season);
 		return $this->championPlayedCount($summonerId, $queues, $seasons, $count);
 	}
+	
+	public function getMultiKills($summonerName, $multiKillCount=5) {
+		return $this->tableSelectWhere('match_details', '*', [['summonerId', $this->getSummonerIdByName($summonerName)], ['largestMultiKill', $multiKillCount]]);
+	}
 }

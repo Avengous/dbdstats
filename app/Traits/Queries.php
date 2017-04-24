@@ -80,4 +80,8 @@ trait Queries {
 	protected function decimated($summonerId) {
 		return DB::table('summoners')->select('decimated')->where([['summonerId', $summonerId]])->get();
 	}
+	
+	protected function tableSelectWhere($table, $select, $where) {
+		return DB::table($table)->select($select)->where($where)->get();
+	}
 }
