@@ -23,14 +23,14 @@
 	<div id="rank" style="width:100%; display: inline-block;">
 		<div style="float:left;">
 			@if ($summonerName == 'Møchi')
-				SOLO POTATO VI
+				SOLO POTATO I 420LP
 			@else
 				SOLO {{ $summonerRank['solo'] }}
 			@endif
 		</div>
 		<div style="float:right;">
 			@if ($summonerName == 'Møchi')
-				FLEX POTATO VI
+				FLEX POTATO I 420LP
 			@else
 				FLEX {{ $summonerRank['flex'] }}
 			@endif

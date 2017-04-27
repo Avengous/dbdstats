@@ -82,5 +82,11 @@
 					<td><a href={{ sprintf("/summoner/%s/%s/details",$summonerName,$match->matchId) }}>Click</a></td>
 				</tr>
 			@endforeach
+				<tr style="">
+					<th colspan="18" style="text-align: right;">
+						{{ $matches->render() }}
+					</th>
+				</tr>
 		</table>
+		
 	</div>
