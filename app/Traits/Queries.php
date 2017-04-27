@@ -58,7 +58,7 @@ trait Queries {
 	
 	protected function championPlayedCount($summonerId, $queues, $seasons, $count) {
 		$query = DB::table('match_details')
-			->select(DB::raw('championId, sum(winner) as wins, COUNT(championId) as count, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
+			->select(DB::raw('championId, SUM(CASE WHEN winner == 1 THEN 1 ELSE 0 END) as wins, COUNT(championId) as count, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
 				->where('summonerId', $summonerId)
 				->whereIn('queueType', $queues)
 				->whereIn('season', $seasons)

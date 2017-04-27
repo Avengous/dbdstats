@@ -84,7 +84,7 @@
 										<td>{{round(($champ->avgKills + $champ->avgAssists)/$champ->avgDeaths, 2)}}</td>
 									@endif
 									<td>{{$champ->count}}</td>
-									<td>{{round($champ->wins/$champ->count, 2)*100}}%</td>
+									<td>{{round($champ->wins/$champ->count, 2)*100}}%"</td>
 								</tr>
 							@endforeach
 						</table>
