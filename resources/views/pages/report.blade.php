@@ -22,10 +22,18 @@
 
 	<div id="rank" style="width:100%; display: inline-block;">
 		<div style="float:left;">
-			SOLO {{ $summonerRank['solo'] }}
+			@if ($summonerName == 'Møchi')
+				SOLO POTATO VI
+			@else
+				SOLO {{ $summonerRank['solo'] }}
+			@endif
 		</div>
 		<div style="float:right;">
-			FLEX {{ $summonerRank['flex'] }}
+			@if ($summonerName == 'Møchi')
+				FLEX POTATO VI
+			@else
+				FLEX {{ $summonerRank['flex'] }}
+			@endif
 		</div>
 		
 		@if ($summonerName == 'Whambulance')
