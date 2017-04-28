@@ -17,7 +17,7 @@ class ReportController extends Controller
 	
 	public function recentMatchDetails($summonerName, $matchCount=100){
 		$summonerId = $this->summonerIdByName($summonerName);
-		return $this->recentMatches($summonerId, $matchCount)->paginate(10);
+		return $this->recentMatches($summonerId, $matchCount)->paginate(10, ['*'], 'recentMatchPage');
 	}
 	
 	public function getSummonerStatsFromMatch($summonerName, $matchId) {
@@ -98,7 +98,7 @@ class ReportController extends Controller
 				return ['SEASON2014', 'PRESEASON2015', 'SEASON2015', 'PRESEASON2016', 'SEASON2016', 'PRESEASON2017'];
 		}
 	}
-	
+
 	protected function queueGroups($queue) {
 		$solo = ['TEAM_BUILDER_RANKED_SOLO', 'RANKED_SOLO_5x5'];
 		$flex = ['RANKED_FLEX_SR'];
@@ -132,13 +132,34 @@ class ReportController extends Controller
 	public function getLaneStats($summonerId, $queue=null, $season=null) {
 		$queues = $this->queueGroups($queue);
 		$seasons = $this->seasonGroups($season);
-		$data = $this->rolePlayedCount($summonerId, $queues, $seasons);
-		$roles = [];
-		foreach ($data as $i) {
-			//if ($data->)
+		$sololanes = $this->rolePlayedCount($summonerId, $queues, $seasons);
+		$botlane = $this->rolePlayedCount($summonerId, $queues, $seasons, true);
+		
+		$default = (object)[
+			'wins' => 0,
+			'totalGames' => 0,
+			'avgKills' => 0,
+			'avgDeaths' => 0,
+			'avgAssists' => 0
+		];
+		
+		$roles = [
+			'TOP' => $default,
+			'JUNGLE' => $default,
+			'MIDDLE' => $default,
+			'ADC' => $default,
+			'SUPPORT' => $default
+		];
+		
+		foreach ($sololanes as $lane) {
+			$roles[$lane->lane] = $lane;
 		}
 		
-		return $data;
+		foreach ($botlane as $lane) {
+			$roles[$lane->lane] = $lane;
+		}
+		
+		return $roles;
 	}
 	
 	public function getMultiKills($summonerName, $multiKillCount=5) {

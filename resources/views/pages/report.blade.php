@@ -7,7 +7,6 @@
 		@php ($summonerRank = App::make("App\Http\Controllers\V1\SummonerController")->soloQueueRank($summonerName))
 		<a class="logo">
 			<strong><font size="+2">{{$summonerName}}</font></strong> 
-			<!-- <div id="rank">FLEX: {{ $summonerRank['flex'] }}</div> -->
 		</a>
 		<div style="float: right; width: 50px;">
 			<a href="{{action('V1\MatchController@verifySummonerMatchList', ['summonerName' => $summonerName, 'allMatches' => true])}}">
@@ -28,6 +27,7 @@
 				SOLO {{ $summonerRank['solo'] }}
 			@endif
 		</div>
+		
 		<div style="float:right;">
 			@if ($summonerName == 'Møchi')
 				FLEX POTATO I 420LP
@@ -49,25 +49,10 @@
 	
 	<!-- Section -->
 	<section>
-		@include('includes.report_recent_match')
-		<!--
-		<header class="major">
-			<h2>Summary</h2>
-		</header>
-		
-		<div id="date-info">
-			<p>Date from: <input type="text" id="datepicker" value="Click To Choose Date" size="22"></p>
-			<p>Date to: <input type="text" id="datepicker2" value="Click To Choose Date" size="22"></p>
-			<button class="button getTickets">Show Results</button>
+		<div style="width: 100%; overflow: auto;">
+			@include('includes.report_recent_match')
+			@include('includes.report_summary')
 		</div>
-		<div class="summary">
-			<div class="circle" id="summary_kills"></div>
-			<div class="circle" id="summary_deaths"></div>
-			<div class="circle" id="summary_assists"></div>
-		</div>
-		-->
-		@include('includes.report_summary')
-		
 	</section>       	
 </div>
 
@@ -81,5 +66,4 @@
 <script type="text/javascript">
   var summoner = "{{$summonerName}}";
 </script>
-<!--<script type="text/javascript" src="{{ asset('js/statistics.functions.js') }}"></script>-->
 @endsection

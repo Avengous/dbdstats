@@ -85,15 +85,38 @@ trait Queries {
 		return DB::table($table)->select($select)->where($where)->get();
 	}
 	
-	protected function rolePlayedCount($summonerId, $queues, $seasons) {
-		$query = DB::table('match_details')
-			->select(DB::raw('lane, role, sum(winner) as wins, COUNT(winner) as totalGames, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
-				->where('summonerId', $summonerId)
-				->whereIn('queueType', $queues)
-				->whereIn('season', $seasons)
-				->groupBy(['role', 'lane'])
-				->orderBy('totalGames', 'desc')
-				->get();
+	protected function rolePlayedCount($summonerId, $queues, $seasons, $bottom=false) {
+		if (in_array('PRESEASON2017', $seasons)) {
+			//$patch = '7.%';
+			$patch = '%';
+		} else {
+			$patch = '%';
+		}
+			
+		
+		if ($bottom) {
+			$query = DB::table('match_details')
+				->select(DB::raw("case when role == 'DUO_CARRY' then 'ADC' when role == 'DUO_SUPPORT' then 'SUPPORT' end as lane, SUM(CASE WHEN winner == 1 THEN 1 ELSE 0 END) as wins, COUNT(winner) as totalGames, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists"))
+					->where('summonerId', $summonerId)
+					->whereIn('queueType', $queues)
+					->whereIn('season', $seasons)
+					->whereIn('lane', ['BOTTOM'])
+					->where('matchVersion', 'like', $patch)
+					->groupBy('role')
+					->orderBy('totalGames', 'desc')
+					->get();
+		} else {
+			$query = DB::table('match_details')
+				->select(DB::raw('lane, SUM(CASE WHEN winner == 1 THEN 1 ELSE 0 END) as wins, COUNT(winner) as totalGames, AVG(kills) as avgKills, AVG(deaths) as avgDeaths, AVG(assists) as avgAssists'))
+					->where('summonerId', $summonerId)
+					->whereIn('queueType', $queues)
+					->whereIn('season', $seasons)
+					->whereIn('lane', ['TOP', 'MIDDLE', 'JUNGLE'])
+					->where('matchVersion', 'like', $patch)
+					->groupBy('lane')
+					->orderBy('totalGames', 'desc')
+					->get();
+		}
 		return $query;
 	}
 }
