@@ -24,13 +24,12 @@
 						@php ($queueType = 'SOLO')
 					@endif
 
-					
 					@if ($league == 'SOLO')
 						@php ($lanes = App::make("App\Http\Controllers\V1\ReportController")->getLaneStats($summonerId, $queueType, $season))
 					@else
 						@if (in_array($season, [4, 5]))
 							@php ($lanes = App::make("App\Http\Controllers\V1\ReportController")->getLaneStats($summonerId, 'TEAM', $season))
-						@elseif ($season == 'ALL')
+						@elseif ($season == 'All')
 							@php ($lanes = App::make("App\Http\Controllers\V1\ReportController")->getLaneStats($summonerId, 'ALLTEAM', $season))
 						@elseif ($season == 6)
 							@php ($lanes = App::make("App\Http\Controllers\V1\ReportController")->getLaneStats($summonerId, $queueType, $season))

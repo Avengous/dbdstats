@@ -126,15 +126,23 @@ class ReportController extends Controller
 		}
 		$queues = $this->queueGroups($queue);
 		$seasons = $this->seasonGroups($season);
+		if ($season == 'All') {
+			array_push($queues, 'TEAM_BUILDER_DRAFT_RANKED_5x5');
+		}
 		return $this->championPlayedCount($summonerId, $queues, $seasons, $count);
 	}
 	
 	public function getLaneStats($summonerId, $queue=null, $season=null) {
 		$queues = $this->queueGroups($queue);
 		$seasons = $this->seasonGroups($season);
+		
+		if ($season == 'All') {
+			array_push($queues, 'TEAM_BUILDER_DRAFT_RANKED_5x5');
+		}
+		
 		$sololanes = $this->rolePlayedCount($summonerId, $queues, $seasons);
 		$botlane = $this->rolePlayedCount($summonerId, $queues, $seasons, true);
-		
+
 		$default = (object)[
 			'wins' => 0,
 			'totalGames' => 0,
