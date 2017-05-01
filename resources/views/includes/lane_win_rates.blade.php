@@ -15,7 +15,6 @@
 						<th>KDA</th>
 						<th>Played</th>
 						<th>Win %</th>
-						<th>Weight</th>
 					</tr>
 					
 					@if ($season == 6)
@@ -52,7 +51,6 @@
 							@else
 								<td>{{round($lanes[$lane]->wins/$lanes[$lane]->totalGames, 2)*100}}%</td>
 							@endif
-							<td></td>
 						</tr>
 					@endforeach
 				</table>
